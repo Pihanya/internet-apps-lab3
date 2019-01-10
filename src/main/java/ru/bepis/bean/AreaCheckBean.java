@@ -2,6 +2,8 @@ package ru.bepis.bean;
 
 import static ru.bepis.util.ConstantValues.DOUBLE_MACHINE_EPSILON;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -12,6 +14,20 @@ import lombok.Data;
 @Data
 public class AreaCheckBean {
   private static final double EPS = DOUBLE_MACHINE_EPSILON;
+
+  private List<Double> xOptions = new ArrayList<>();
+  // todo: захуячить сюда возможные иксы
+  private double selectedX;
+
+  public double getSelectedX() {
+    return selectedX;
+  }
+  public void setSelectedX(double selectedX) {
+    this.selectedX = selectedX;
+  }
+  public List<Double> getxOptions() {
+    return xOptions;
+  }
 
   @ManagedProperty(value = "#{x}")
   private double x;
