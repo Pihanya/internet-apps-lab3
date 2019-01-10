@@ -14,7 +14,10 @@
   </context-param>
   <context-param>
     <param-name>javax.faces.CONFIG_FILES</param-name>
-    <param-value>/WEB-INF/faces-config.xml</param-value>
+    <param-value>
+      WEB-INF/faces-config.xml,
+      WEB-INF/navigation-config.xml
+    </param-value>
   </context-param>
 
   <welcome-file-list>
