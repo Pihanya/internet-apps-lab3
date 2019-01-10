@@ -30,15 +30,15 @@ public class AreaCheckBean {
   }
 
   @ManagedProperty(value = "#{x}")
-  private double x;
+  private Double x;
 
   @ManagedProperty(value = "#{y}")
-  private double y;
+  private Double y;
 
   @ManagedProperty(value = "#{r}")
-  private double r;
+  private Double r;
 
-  public boolean isValidPoint(double x, double y, double r) {
+  public static boolean validate(double x, double y, double r) {
     if (Math.abs(y) <= EPS) {
       return r - Math.abs(x) >= 0;
     }
@@ -56,5 +56,9 @@ public class AreaCheckBean {
     } else {
       return false;
     }
+  }
+
+  public boolean isValidPoint() {
+    return validate(x, y, r);
   }
 }
