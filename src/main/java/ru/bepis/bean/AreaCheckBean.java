@@ -6,23 +6,23 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import lombok.Data;
-import ru.bepis.model.Request;
 
 @ManagedBean(name = "areaCheck", eager = true)
 @RequestScoped
 @Data
 public class AreaCheckBean {
-
   private static final double EPS = DOUBLE_MACHINE_EPSILON;
 
-  @ManagedProperty(value = "#{userRequest}")
-  private Request request;
+  @ManagedProperty(value = "#{x}")
+  private double x;
 
-  public AreaCheckBean(double x, double y, double r) {
-    this.request = new Request(x, y, r, isValidPoint(x, y, r));
-  }
+  @ManagedProperty(value = "#{y}")
+  private double y;
 
-  public static boolean isValidPoint(double x, double y, double r) {
+  @ManagedProperty(value = "#{r}")
+  private double r;
+
+  public boolean isValidPoint(double x, double y, double r) {
     if (Math.abs(y) <= EPS) {
       return r - Math.abs(x) >= 0;
     }
