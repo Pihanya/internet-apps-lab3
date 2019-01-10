@@ -2,7 +2,7 @@ package ru.bepis.bean;
 
 import static ru.bepis.util.ConstantValues.DOUBLE_MACHINE_EPSILON;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -15,28 +15,19 @@ import lombok.Data;
 public class AreaCheckBean {
   private static final double EPS = DOUBLE_MACHINE_EPSILON;
 
-  private List<Double> xOptions = new ArrayList<>();
-  // todo: захуячить сюда возможные иксы
+  @ManagedProperty(value = "#{xOptions}")
+  private List<Double> xOptions = Arrays.asList(-2D, -1.5, -1D, -0.5, 0D, 0.5, 1D, 1D);
+  @ManagedProperty(value = "#{x}")
   private double selectedX;
 
-  public double getSelectedX() {
-    return selectedX;
-  }
-  public void setSelectedX(double selectedX) {
-    this.selectedX = selectedX;
-  }
-  public List<Double> getxOptions() {
-    return xOptions;
-  }
-
-  @ManagedProperty(value = "#{x}")
-  private Double x;
-
   @ManagedProperty(value = "#{y}")
-  private Double y;
+  private double yValue;
+
+  @ManagedProperty(value = "#{rOptions}")
+  private List<Double> rOptions = Arrays.asList(1D, 1.5, 2D, 2.5, 3D);
 
   @ManagedProperty(value = "#{r}")
-  private Double r;
+  private double selectedR;
 
   public static boolean validate(double x, double y, double r) {
     if (Math.abs(y) <= EPS) {
@@ -59,6 +50,6 @@ public class AreaCheckBean {
   }
 
   public boolean isValidPoint() {
-    return validate(x, y, r);
+    return validate(selectedX, yValue, selectedR);
   }
 }
