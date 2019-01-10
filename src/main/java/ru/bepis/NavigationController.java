@@ -3,9 +3,11 @@ package ru.bepis;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import lombok.Data;
 
 @ManagedBean(name = "navigationController", eager = true)
 @RequestScoped
+@Data
 public class NavigationController {
 
   // todo refactor
@@ -24,9 +26,9 @@ public class NavigationController {
     }
 
     if(pageId.equals("1")) {
-      return "page1";
+      return "home";
     }else if(pageId.equals("2")) {
-      return "page2";
+      return "start";
     }else {
       return "home";
     }
