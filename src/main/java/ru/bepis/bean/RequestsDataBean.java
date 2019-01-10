@@ -1,25 +1,41 @@
 package ru.bepis.bean;
 
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import lombok.Data;
+import ru.bepis.RequestRepository;
 import ru.bepis.model.Request;
 
 @ManagedBean(name = "requestsData", eager = true)
-@SessionScoped
+@ApplicationScoped
 @Data
 public class RequestsDataBean {
-  private List<Request> requests;
+  private RequestRepository repository;
 
-  public Request addRequest(Request request) {
-    requests.add(request);
-    return request;
+  public RequestsDataBean() {
+    this(new RequestRepository());
   }
 
-  public Collection<Request> saveRequests() {
-    // todo implement
-    return null;
+  public RequestsDataBean(RequestRepository repository) {
+    this.repository = repository;
+  }
+
+  public List<Request> getRequests() {
+    try {
+      return repository.getAllRequests();
+    } catch (Exception ex) {
+      return Collections.emptyList();
+    }
+  }
+
+  public Request addRequest(Request request) {
+    try {
+      repository.addRequest(request);
+      return request;
+    } catch (Exception ex) {
+      return null;
+    }
   }
 }
