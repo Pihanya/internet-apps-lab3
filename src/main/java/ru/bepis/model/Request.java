@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "EMPLOYEE")
+@Table(name = "REQUESTS")
 @Data
 public class Request {
   @Id
@@ -26,12 +26,18 @@ public class Request {
   private double r;
 
   @Column(name = "result")
-  private boolean result;
+  private Boolean result;
 
   public Request(double x, double y, double r, boolean result) {
     this.x = x;
     this.y = y;
     this.r = r;
     this.result = result;
+  }
+
+  // todo consider
+  // Как насчет такого варианта результата запроса?
+  public enum RequestResult {
+    TRUE_POINT, FALSE_POINT, DATA_ERROR;
   }
 }
