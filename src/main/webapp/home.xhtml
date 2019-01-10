@@ -1,13 +1,52 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns = "http://www.w3.org/1999/xhtml">
-<head>
-    <title>JSF Tutorial!</title>
-</head>
+<html xmlns = "http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
 
-<!-- todo hatch -->
-<body>
-#{helloWorld.message}
-</body>
+<h:head>
+    <title>ЛР №3</title>
+</h:head>
+<h:body>
+<h:outputStylesheet library="css" name="style.css"  />
+<table>
+    <tr>
+        <td id="header" colspan="3">
+        <p id="name">
+            Лабораторная работа №3<br/>
+            Группа P3201, Вариант 18151<br/>
+            Котелевский Павел Георгиевич<br/>
+            Гостев Михаил Владимирович
+        </p>
+        </td>
+    </tr>
+    <tr id="content">
+    <td id="left-content-column">
+    <table class="inner">
+        <tr>
+            <th>X</th>
+            <th>Y</th>
+            <th>R</th>
+            <th>Result</th>
+        </tr>
+        <!-- todo: history table -->
+    </table>
+    </td>
+    <td id="middle-content-column">
+        Здесь будет форма
+        <!-- todo: form -->
+    </td>
+    <td id="right-content-column">
+        <p>Приложение определяет, входят ли указанные пользователем точки в заданную
+            область.</p>
+
+        <!-- todo: diagram -->
+    </td>
+    </tr>
+    <tr>
+        <td id="footer" colspan="3"><p id="footer-text">&copy; Университет ИТМО 2018</p></td>
+    </tr>
+</table>
+</h:body>
 </html>
