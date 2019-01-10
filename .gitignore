@@ -1,2 +1,9 @@
+# Idea project files
 .idea/*
-main/resources/*
+
+# Project compile output
+out/*
+target/*
+
+# Hibernate configuration
+src/main/resources/hibernate.cfg.xml
