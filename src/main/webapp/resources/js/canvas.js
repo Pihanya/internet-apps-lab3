@@ -112,28 +112,15 @@ function isArea(x, y, r, callback) {
 
 // todo
 function checkPoint(x, y, r, callback) {
-  let xmlHttpRequest = new XMLHttpRequest();
-  xmlHttpRequest.open("POST", "?"
-      + "x=" + (r * ((x - 150) / 130))
-      + "&y=" + (r * ((150 - y) / 130))
-      + "&r=" + r
-      + "&redirect=false", true);
-  xmlHttpRequest.setRequestHeader('Content-Type',
-      'application/x-www-form-urlencoded');
-  xmlHttpRequest.send();
-
-  xmlHttpRequest.onreadystatechange = function () {
-    if (xmlHttpRequest.readyState === 4 && xmlHttpRequest.status === 200) {
-      console.log("Response: " + xmlHttpRequest.responseText);
-
-      let points = JSON.parse(xmlHttpRequest.responseText).points;
-      console.log("Points: " + points);
-
-      callback(points[points.length - 1].result);
-    } else {
-      callback(false);
-    }
-  };
+  let hiddenX = document.getElementById("graph-controls:hidden-x");
+  let hiddenY = document.getElementById("graph-controls:hidden-y");
+  let hiddenResult = document.getElementById("graph-controls:result");
+  hiddenX.value = (r * ((x - 150) / 130));
+  hiddenY.value = (r * ((150 - y) / 130));
+  validateGraph();
+  // todo: add to history
+  console.log(hiddenResult.value);
+  callback(hiddenResult.value === "true");
 }
 
 function checkPointLocally(x, y, r) {
