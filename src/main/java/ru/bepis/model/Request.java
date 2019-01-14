@@ -3,17 +3,23 @@ package ru.bepis.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "REQUESTS")
+@Table(name = "request")
 @Data
+@NoArgsConstructor
 public class Request {
+
   @Id
-  @GeneratedValue
+//  @GeneratedValue(strategy= GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
+//  @Type(type = "IntegerType")
   private int id;
 
   @Column(name = "x")
