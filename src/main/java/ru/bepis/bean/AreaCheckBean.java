@@ -13,6 +13,21 @@ import lombok.Data;
 @Data
 public class AreaCheckBean {
 
+  private static final double EPS = DOUBLE_MACHINE_EPSILON;
+
+  private List<Double> xOptions = Arrays.asList(-2D, -1.5, -1D, -0.5, 0D, 0.5, 1D, 1D);
+  private double selectedX;
+
+  private double yValue;
+
+  private List<Double> rOptions = Arrays.asList(1D, 1.5, 2D, 2.5, 3D);
+  private double selectedR;
+
+  private double hiddenX;
+  private double hiddenR;
+  private double hiddenY;
+  private String hiddenResult;
+
   public List<Double> getxOptions() {
     return xOptions;
   }
@@ -52,21 +67,6 @@ public class AreaCheckBean {
   public void setSelectedR(double selectedR) {
     this.selectedR = selectedR;
   }
-
-  private static final double EPS = DOUBLE_MACHINE_EPSILON;
-
-  private List<Double> xOptions = Arrays.asList(-2D, -1.5, -1D, -0.5, 0D, 0.5, 1D, 1D);
-  private double selectedX;
-
-  private double yValue;
-
-  private List<Double> rOptions = Arrays.asList(1D, 1.5, 2D, 2.5, 3D);
-  private double selectedR;
-
-  private double hiddenX;
-  private double hiddenR;
-  private double hiddenY;
-  private String hiddenResult;
 
   public double getHiddenX() {
     return hiddenX;
