@@ -2,14 +2,17 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
     <title>ЛР №3</title>
 </h:head>
-<h:body>
-    <h:outputStylesheet library="css" name="style.css"/>
+<h:body onload="drawCanvas(1)">
+    <h:outputStylesheet library="css" name="style.css" position="last"/>
+    <h:outputScript library="js" name="canvas.js"/>
+    <h:outputScript library="js" name="events_handlers.js"/>
     <table>
         <tr>
             <td id="header" colspan="3">
@@ -34,20 +37,48 @@
                 </table>
             </td>
             <td id="middle-content-column">
-                <h:selectOneMenu value = "#{areaCheck.selectedX}">
-                    <f:selectItems value="#{areaCheck.xOptions}"/>
-                </h:selectOneMenu>
-                <!-- todo: form -->
+                <h:form id="data-form">
+                    <fieldset>
+                        <legend>Значение X</legend>
+                        <h:selectOneMenu styleClass="input-class" value="#{areaCheck.selectedX}"
+                                         id="x">
+                            <f:selectItems value="#{areaCheck.xOptions}"/>
+                        </h:selectOneMenu>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Значение Y</legend>
+                        <h:inputText styleClass="input-class" value="#{areaCheck.yValue}" id="y"/>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Значение R</legend>
+                        <h:selectOneMenu styleClass="input-class" value="#{areaCheck.selectedR}"
+                                         id="r" onchange="onRadiusInput()">
+                            <f:selectItems value="#{areaCheck.rOptions}"/>
+                        </h:selectOneMenu>
+                    </fieldset>
+                    <h:commandButton styleClass="input-class" value="Отправить"/>
+                </h:form>
+                <div id="errors"></div>
             </td>
             <td id="right-content-column">
                 <p>Приложение определяет, входят ли указанные пользователем точки в заданную
                     область.</p>
 
-                <!-- todo: diagram -->
+                <b:canvas id="canvas" onclick="onCanvasClick()"
+                          style="background-color:#ffffff; border-radius: 20px;"
+                          width="300" height="300"/>
             </td>
         </tr>
         <tr>
-            <td id="footer" colspan="3"><p id="footer-text">&copy; Университет ИТМО 2018</p></td>
+            <td id="footer" colspan="3">
+                <h:form>
+                    <h:commandButton value="Стартовая страница"
+                              action="#{navigationController.showPage()}">
+                        <f:param name="pageId" value="2"/>
+                    </h:commandButton>
+                </h:form>
+                <p id="footer-text">&copy; Университет ИТМО 2018</p>
+            </td>
         </tr>
     </table>
 </h:body>

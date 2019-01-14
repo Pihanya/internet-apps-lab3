@@ -10,10 +10,18 @@ import lombok.Data;
 @Data
 public class NavigationController {
 
+  public String getPageId() {
+    return pageId;
+  }
+
+  public void setPageId(String pageId) {
+    this.pageId = pageId;
+  }
+
   // todo refactor
   //this managed property will read value from request parameter pageId
   @ManagedProperty(value = "#{param.pageId}")
-  private String pageId;
+  private String pageId = "2";
 
   //condional navigation based on pageId
   //if pageId is 1 show page1.xhtml,

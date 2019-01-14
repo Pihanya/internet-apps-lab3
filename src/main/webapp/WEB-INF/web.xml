@@ -8,7 +8,7 @@
 
   <display-name>Internet Applications Third Lab</display-name>
 
-  <context-param>
+  <!--<context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
     <param-value>Development</param-value>
   </context-param>
@@ -18,7 +18,7 @@
       WEB-INF/faces-config.xml,
       WEB-INF/navigation-config.xml
     </param-value>
-  </context-param>
+  </context-param>-->
 
   <welcome-file-list>
     <welcome-file>start.xhtml</welcome-file>

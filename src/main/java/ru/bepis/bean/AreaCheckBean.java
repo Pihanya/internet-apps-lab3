@@ -12,6 +12,47 @@ import lombok.Data;
 @RequestScoped
 @Data
 public class AreaCheckBean {
+
+  public List<Double> getxOptions() {
+    return xOptions;
+  }
+
+  public void setxOptions(List<Double> xOptions) {
+    this.xOptions = xOptions;
+  }
+
+  public double getSelectedX() {
+    return selectedX;
+  }
+
+  public void setSelectedX(double selectedX) {
+    this.selectedX = selectedX;
+  }
+
+  public double getyValue() {
+    return yValue;
+  }
+
+  public void setyValue(double yValue) {
+    this.yValue = yValue;
+  }
+
+  public List<Double> getrOptions() {
+    return rOptions;
+  }
+
+  public void setrOptions(List<Double> rOptions) {
+    this.rOptions = rOptions;
+  }
+
+  public double getSelectedR() {
+    return selectedR;
+  }
+
+  public void setSelectedR(double selectedR) {
+    this.selectedR = selectedR;
+  }
+
   private static final double EPS = DOUBLE_MACHINE_EPSILON;
 
   private List<Double> xOptions = Arrays.asList(-2D, -1.5, -1D, -0.5, 0D, 0.5, 1D, 1D);
