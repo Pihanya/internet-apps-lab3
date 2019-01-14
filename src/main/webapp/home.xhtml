@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <title>ЛР №3</title>
@@ -59,14 +60,25 @@
                     <h:commandButton styleClass="input-class" value="Отправить"/>
                 </h:form>
                 <div id="errors"></div>
+
+                <h:form id="graph-controls">
+                    <h:inputHidden value="#{areaCheck.hiddenX}" id="hidden-x"/>
+                    <h:inputHidden value="#{areaCheck.hiddenY}" id="hidden-y"/>
+                    <h:inputHidden value="#{areaCheck.hiddenResult}" id="result"/>
+                    <p:remoteCommand name="validateGraph" update="result"
+                                     action="#{areaCheck.validateFromGraph()}"/>
+                </h:form>
+
             </td>
             <td id="right-content-column">
                 <p>Приложение определяет, входят ли указанные пользователем точки в заданную
                     область.</p>
-
-                <b:canvas id="canvas" onclick="onCanvasClick()"
-                          style="background-color:#ffffff; border-radius: 20px;"
+                <div id="canvas-div" onmousedown="onCanvasClick(event)">
+                <b:canvas id="canvas"
+                          style="background-color:#ffffff;
+                          border-radius: 20px;"
                           width="300" height="300"/>
+                </div>
             </td>
         </tr>
         <tr>

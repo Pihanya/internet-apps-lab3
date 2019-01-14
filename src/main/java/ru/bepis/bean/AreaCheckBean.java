@@ -63,6 +63,35 @@ public class AreaCheckBean {
   private List<Double> rOptions = Arrays.asList(1D, 1.5, 2D, 2.5, 3D);
   private double selectedR;
 
+  private double hiddenX;
+  private double hiddenR;
+  private double hiddenY;
+  private String hiddenResult;
+
+  public double getHiddenX() {
+    return hiddenX;
+  }
+
+  public void setHiddenX(double hiddenX) {
+    this.hiddenX = hiddenX;
+  }
+
+  public double getHiddenR() {
+    return hiddenR;
+  }
+
+  public void setHiddenR(double hiddenR) {
+    this.hiddenR = hiddenR;
+  }
+
+  public double getHiddenY() {
+    return hiddenY;
+  }
+
+  public void setHiddenY(double hiddenY) {
+    this.hiddenY = hiddenY;
+  }
+
   public static boolean validate(double x, double y, double r) {
     if (Math.abs(y) <= EPS) {
       return r - Math.abs(x) >= 0;
@@ -85,5 +114,17 @@ public class AreaCheckBean {
 
   public boolean isValidPoint() {
     return validate(selectedX, yValue, selectedR);
+  }
+
+  public String getHiddenResult() {
+    return hiddenResult;
+  }
+
+  public void setHiddenResult(String hiddenResult) {
+    this.hiddenResult = hiddenResult;
+  }
+
+  public void validateFromGraph() {
+    hiddenResult = validate(hiddenX, hiddenY, selectedR) ? "true" : "false";
   }
 }

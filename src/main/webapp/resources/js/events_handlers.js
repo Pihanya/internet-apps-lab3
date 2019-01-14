@@ -77,13 +77,12 @@ function onRadiusInput() {
   drawCanvas(currentR);
 }
 
-function onCanvasClick() {
-  var canvas = document.querySelector("#canvas");
+function onCanvasClick(event) {
+  var canvas = document.querySelector("#canvas-div");
   var rect = canvas.getBoundingClientRect();
 
   var left = rect.left;
   var top = rect.top;
-  var event = window.event;
 
   var x = event.clientX - left;
   var y = event.clientY - top;
