@@ -7,9 +7,9 @@ import ru.bepis.bean.AreaCheckBean;
 
 public class PointValidatorTests {
 
-  private static final double R = 1.0D;
+  private static final double R = 2.0D;
 
-  private Predicate<Point> checker = (point) -> AreaCheckBean.validate(point.x, point.y, R);
+  private Predicate<Point> checker = (point) -> AreaCheckBean.validate(R*point.x, R*point.y, R);
 
   @Test
   public void upperRightNegativeTest() {
