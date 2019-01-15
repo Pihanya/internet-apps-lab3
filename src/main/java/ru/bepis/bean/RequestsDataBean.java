@@ -1,7 +1,6 @@
 package ru.bepis.bean;
 
 import com.jcraft.jsch.JSchException;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import java.util.Collections;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
@@ -64,7 +63,11 @@ public class RequestsDataBean {
 
   public List<Request> getRequests() {
     try {
-      return repository.getAllRequests();
+      List<Request> requests = repository.getAllRequests();
+      for (Request r : requests) {
+        r.setX(r.getX());
+      }
+      return requests.subList(Math.max(0, requests.size() - 10), requests.size());
     } catch (Exception ex) {
       return Collections.emptyList();
     }
@@ -74,6 +77,7 @@ public class RequestsDataBean {
 
     boolean res = Boolean.parseBoolean(result);
     Request request = new Request(x, y, r, res);
+    System.out.println("Added " + request.toString());
     try {
       repository.addRequest(request);
       return request;

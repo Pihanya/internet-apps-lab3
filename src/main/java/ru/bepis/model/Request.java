@@ -12,8 +12,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "request")
 @Data
-@NoArgsConstructor
 public class Request {
+
+  public Request() {
+
+  }
 
   public double getX() {
     return x;

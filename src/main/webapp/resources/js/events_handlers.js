@@ -1,6 +1,9 @@
 var currentR = 1;
 
 function onFormSubmit() {
+  let xField = document.getElementById("data-form:x");
+  let yField = document.getElementById("data-form:y");
+  let rField = document.getElementById("data-form:r");
   let form = document.querySelector("#data-form");
 
   let valid = true;
@@ -8,9 +11,8 @@ function onFormSubmit() {
   // let message = "<b>Форма содержит следующие ошибки:</b><br>";
   let message = "<b>There are the following errors in the form:</b><br>";
 
-  let valueX;
-  let valueY = form.y.value;
-  let valueR = form.r.value;
+  let valueX = xField.options[xField.selectedIndex].value;
+  let valueY = yField.value;
 
   if (isNaN(+(valueY))) {
     // message += "Значение Y должно быть числом<br>";
@@ -28,9 +30,14 @@ function onFormSubmit() {
 
   if (!valid) {
     document.getElementById("errors").innerHTML = message;
+    return;
   }
 
-  return valid;
+  let x = valueX * 130 + 150;
+  let y = 150 - valueY * 130;
+  console.log("Checking point: " + x + " " + y);
+  isArea(x, y, currentR);
+
 }
 
 function onRadiusInput() {

@@ -136,6 +136,8 @@ function checkPoint(x, y, r) {
   let hiddenResult = document.getElementById("graph-controls:result");
   hiddenX.value = (r * ((x - 150) / 130));
   hiddenY.value = (r * ((150 - y) / 130));
+  hiddenX.value = parseFloat(hiddenX.value.toString()).toFixed(3);
+  hiddenY.value = parseFloat(hiddenY.value.toString()).toFixed(3);
   hiddenR.value = r;
   lastX = x;
   lastY = y;
