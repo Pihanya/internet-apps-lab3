@@ -11,7 +11,7 @@ import javax.servlet.ServletContext;
 import lombok.Data;
 import org.primefaces.context.RequestContext;
 
-@ManagedBean(name = "areaCheck", eager = true)
+@ManagedBean(name = "areaCheck")
 @RequestScoped
 @Data
 public class AreaCheckBean {

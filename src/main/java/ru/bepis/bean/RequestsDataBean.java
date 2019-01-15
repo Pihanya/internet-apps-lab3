@@ -11,7 +11,7 @@ import ru.bepis.repository.HibernateRequestRepository;
 import ru.bepis.model.Request;
 import ru.bepis.repository.RequestRepository;
 
-@ManagedBean(name = "requestsData", eager = true)
+@ManagedBean(name = "requestsData")
 @ApplicationScoped
 @Data
 public class RequestsDataBean {
