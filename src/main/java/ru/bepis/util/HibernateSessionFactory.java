@@ -23,8 +23,8 @@ public class HibernateSessionFactory {
   private static final String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
   private static final ThreadLocal<Session> LOCAL_SESSION = new ThreadLocal<>();
 
-  private static Configuration configuration = new Configuration(
-      new MetadataSources().addResource("hibernate.cfg.xml"));
+  private static Configuration configuration =
+      new Configuration(new MetadataSources().addResource("hibernate.cfg.xml"));
   private static String configFile = CONFIG_FILE_LOCATION;
 
   private static SessionFactory sessionFactory;

@@ -10,4 +10,8 @@ public interface RequestRepository {
   List<Request> getAllRequests();
 
   void deleteAllRequests();
+
+  void createTable();
+
+  void dropTable();
 }

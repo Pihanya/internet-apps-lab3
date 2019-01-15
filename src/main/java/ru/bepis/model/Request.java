@@ -16,34 +16,26 @@ import lombok.NoArgsConstructor;
 public class Request {
 
   @Id
-//  @GeneratedValue(strategy= GenerationType.AUTO)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
-//  @Type(type = "IntegerType")
-  private int id;
+  private Integer id;
 
   @Column(name = "x")
   private double x;
 
-  @Column(name = "x")
+  @Column(name = "y")
   private double y;
 
-  @Column(name = "x")
+  @Column(name = "r")
   private double r;
 
   @Column(name = "result")
-  private Boolean result;
+  private boolean result;
 
   public Request(double x, double y, double r, boolean result) {
     this.x = x;
     this.y = y;
     this.r = r;
     this.result = result;
-  }
-
-  // todo consider
-  // Как насчет такого варианта результата запроса?
-  public enum RequestResult {
-    TRUE_POINT, FALSE_POINT, DATA_ERROR;
   }
 }
