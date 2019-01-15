@@ -29,15 +29,15 @@ public class NavigationController {
   //else show home.xhtml
 
   public String showPage() {
-    if(pageId == null) {
+    if (pageId == null) {
       return "home";
     }
 
-    if(pageId.equals("1")) {
+    if (pageId.equals("1")) {
       return "home";
-    }else if(pageId.equals("2")) {
+    } else if (pageId.equals("2")) {
       return "start";
-    }else {
+    } else {
       return "home";
     }
   }

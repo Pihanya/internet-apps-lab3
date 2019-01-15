@@ -1,13 +1,12 @@
 package ru.bepis.bean;
 
-import com.jcraft.jsch.JSchException;
 import java.util.Collections;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import lombok.Data;
-import ru.bepis.repository.HibernateRequestRepository;
 import ru.bepis.model.Request;
+import ru.bepis.repository.HibernateRequestRepository;
 import ru.bepis.repository.RequestRepository;
 
 @ManagedBean(name = "requestsData", eager = true)
@@ -16,7 +15,7 @@ import ru.bepis.repository.RequestRepository;
 public class RequestsDataBean {
   private RequestRepository repository;
 
-  public RequestsDataBean() throws JSchException {
+  public RequestsDataBean() {
     this(new HibernateRequestRepository());
   }
 
