@@ -15,6 +15,38 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Request {
 
+  public double getX() {
+    return x;
+  }
+
+  public void setX(double x) {
+    this.x = x;
+  }
+
+  public double getY() {
+    return y;
+  }
+
+  public void setY(double y) {
+    this.y = y;
+  }
+
+  public double getR() {
+    return r;
+  }
+
+  public void setR(double r) {
+    this.r = r;
+  }
+
+  public Boolean getResult() {
+    return result;
+  }
+
+  public void setResult(Boolean result) {
+    this.result = result;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")

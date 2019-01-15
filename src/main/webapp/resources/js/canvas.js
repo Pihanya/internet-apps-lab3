@@ -1,3 +1,6 @@
+let lastX = 0;
+let lastY = 0;
+
 function drawCanvas(r) {
   let canvas = document.querySelector("#canvas");
   let context = canvas.getContext("2d");
@@ -86,9 +89,13 @@ function drawCanvas(r) {
   context.stroke();
 }
 
-function drawPoint(x, y, isArea) {
+function drawPoint() {
   let canvas = document.querySelector("#canvas");
   let context = canvas.getContext("2d");
+  let x = lastX;
+  let y = lastY;
+  let result = document.getElementById("graph-controls:result").value;
+  let isArea = (result === "true");
 
   context.beginPath();
   context.rect(x - 2, y - 2, 4, 4);
@@ -97,30 +104,42 @@ function drawPoint(x, y, isArea) {
     context.strokeStyle = "green";
     context.fillStyle = "green";
   } else {
-    context.strokeStyle = "red";
-    context.fillStyle = "red";
+    context.strokeStyle = "maroon";
+    context.fillStyle = "maroon";
   }
-
   context.fill();
   context.stroke();
+
+  let dbResult = document.getElementById("db-inputs:db-result");
+  let dbX = document.getElementById("db-inputs:db-x");
+  let dbY = document.getElementById("db-inputs:db-y");
+  let dbR = document.getElementById("db-inputs:db-r");
+  x = (x - 150) / 130;
+  y = (150 - y) / 130;
+  dbX.value = x;
+  dbY.value = y;
+  dbR.value = currentR;
+  dbResult.value = result;
+  writeDB();
 }
 
-function isArea(x, y, r, callback) {
-  return checkPoint(x, y, r, callback); // todo
+function isArea(x, y, r) {
+  return checkPoint(x, y, r); // todo
   // return checkPointLocally(x, y, r); // todo
 }
 
 // todo
-function checkPoint(x, y, r, callback) {
+function checkPoint(x, y, r) {
   let hiddenX = document.getElementById("graph-controls:hidden-x");
   let hiddenY = document.getElementById("graph-controls:hidden-y");
+  let hiddenR = document.getElementById("graph-controls:hidden-r");
   let hiddenResult = document.getElementById("graph-controls:result");
   hiddenX.value = (r * ((x - 150) / 130));
   hiddenY.value = (r * ((150 - y) / 130));
+  hiddenR.value = r;
+  lastX = x;
+  lastY = y;
   validateGraph();
-  // todo: add to history
-  console.log(hiddenResult.value);
-  callback(hiddenResult.value === "true");
 }
 
 function checkPointLocally(x, y, r) {

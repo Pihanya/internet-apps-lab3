@@ -5,9 +5,11 @@ import static ru.bepis.util.ConstantValues.DOUBLE_MACHINE_EPSILON;
 import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.servlet.ServletContext;
 import lombok.Data;
+import org.primefaces.context.RequestContext;
 
 @ManagedBean(name = "areaCheck", eager = true)
 @RequestScoped
@@ -130,6 +132,6 @@ public class AreaCheckBean {
   }
 
   public void validateFromGraph() {
-    hiddenResult = validate(hiddenX, hiddenY, selectedR) ? "true" : "false";
+    hiddenResult = validate(hiddenX, hiddenY, hiddenR) ? "true" : "false";
   }
 }

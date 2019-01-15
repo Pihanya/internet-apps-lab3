@@ -27,15 +27,27 @@
         </tr>
         <tr id="content">
             <td id="left-content-column">
-                <table class="inner">
-                    <tr>
-                        <th>X</th>
-                        <th>Y</th>
-                        <th>R</th>
-                        <th>Result</th>
-                    </tr>
-                    <!-- todo: history table -->
-                </table>
+                <h:dataTable value="#{requestsData.requests}"
+                             var="req"
+                             id="history"
+                             styleClass="inner">
+                    <h:column>
+                        <f:facet name="header"> X </f:facet>
+                        ${req.x}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"> Y </f:facet>
+                        ${req.y}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"> R </f:facet>
+                        ${req.r}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"> RESULT </f:facet>
+                        ${req.result}
+                    </h:column>
+                </h:dataTable>
             </td>
             <td id="middle-content-column">
                 <h:form id="data-form">
@@ -64,16 +76,26 @@
                 <h:form id="graph-controls">
                     <h:inputHidden value="#{areaCheck.hiddenX}" id="hidden-x"/>
                     <h:inputHidden value="#{areaCheck.hiddenY}" id="hidden-y"/>
+                    <h:inputHidden value="#{areaCheck.hiddenR}" id="hidden-r"/>
                     <h:inputHidden value="#{areaCheck.hiddenResult}" id="result"/>
                     <p:remoteCommand name="validateGraph" update="result"
-                                     action="#{areaCheck.validateFromGraph()}"/>
+                                     action="#{areaCheck.validateFromGraph()}"
+                                     oncomplete="drawPoint()"/>
                 </h:form>
 
+                <h:form id="db-inputs">
+                    <h:inputHidden value="#{requestsData.x}" id="db-x"/>
+                    <h:inputHidden value="#{requestsData.y}" id="db-y"/>
+                    <h:inputHidden value="#{requestsData.r}" id="db-r"/>
+                    <h:inputHidden value="#{requestsData.result}" id="db-result"/>
+                    <p:remoteCommand name="writeDB" update="history"
+                                     action="#{requestsData.addRequest()}"/>
+                </h:form>
             </td>
             <td id="right-content-column">
                 <p>Приложение определяет, входят ли указанные пользователем точки в заданную
                     область.</p>
-                <div id="canvas-div" onmousedown="onCanvasClick(event)">
+                <div id="canvas-div" onmousedown="onCanvasClick(event)" width="300" height="300">
                 <b:canvas id="canvas"
                           style="background-color:#ffffff;
                           border-radius: 20px;"
