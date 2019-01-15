@@ -6,27 +6,13 @@ import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.servlet.ServletContext;
 import lombok.Data;
 
 @ManagedBean(name = "areaCheck", eager = true)
 @RequestScoped
 @Data
 public class AreaCheckBean {
-
-  private static final double EPS = DOUBLE_MACHINE_EPSILON;
-
-  private List<Double> xOptions = Arrays.asList(-2D, -1.5, -1D, -0.5, 0D, 0.5, 1D, 1D);
-  private double selectedX;
-
-  private double yValue;
-
-  private List<Double> rOptions = Arrays.asList(1D, 1.5, 2D, 2.5, 3D);
-  private double selectedR;
-
-  private double hiddenX;
-  private double hiddenR;
-  private double hiddenY;
-  private String hiddenResult;
 
   public List<Double> getxOptions() {
     return xOptions;
@@ -68,6 +54,21 @@ public class AreaCheckBean {
     this.selectedR = selectedR;
   }
 
+  private static final double EPS = DOUBLE_MACHINE_EPSILON;
+
+  private List<Double> xOptions = Arrays.asList(-2D, -1.5, -1D, -0.5, 0D, 0.5, 1D, 1D);
+  private double selectedX = -2D;
+
+  private double yValue = 0;
+
+  private List<Double> rOptions = Arrays.asList(1D, 1.5, 2D, 2.5, 3D);
+  private double selectedR = 1D;
+
+  private double hiddenX;
+  private double hiddenR;
+  private double hiddenY;
+  private String hiddenResult;
+
   public double getHiddenX() {
     return hiddenX;
   }
@@ -93,6 +94,10 @@ public class AreaCheckBean {
   }
 
   public static boolean validate(double x, double y, double r) {
+    System.out.println("R: " + r);
+    System.out.println("X: " + x);
+    System.out.println("Y: " + y);
+
     if (Math.abs(y) <= EPS) {
       return r - Math.abs(x) >= 0;
     }
