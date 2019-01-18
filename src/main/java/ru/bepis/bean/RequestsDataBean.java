@@ -5,10 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import lombok.Data;
-import ru.bepis.repository.HibernateRequestRepository;
 import ru.bepis.model.Request;
+import ru.bepis.repository.HibernateRequestRepository;
 import ru.bepis.repository.RequestRepository;
 
 @ManagedBean(name = "requestsData")
@@ -74,7 +73,6 @@ public class RequestsDataBean {
   }
 
   public Request addRequest() {
-
     boolean res = Boolean.parseBoolean(result);
     Request request = new Request(x, y, r, res);
     System.out.println("Added " + request.toString());

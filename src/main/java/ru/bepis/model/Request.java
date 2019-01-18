@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "request")
@@ -15,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class Request {
 
   public Request() {
-
   }
 
   public double getX() {

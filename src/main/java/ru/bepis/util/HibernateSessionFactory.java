@@ -3,8 +3,9 @@ package ru.bepis.util;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 
 /**
  * Configures and provides access to Hibernate sessions, tied to the current thread of execution.
@@ -21,10 +22,9 @@ public class HibernateSessionFactory {
    * location of the configuration file for the current session.
    */
   private static final String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
-  private static final ThreadLocal<Session> LOCAL_SESSION = new ThreadLocal<>();
+  private static final ThreadLocal<Session> LOCAL_SESSION = new ThreadLocal<Session>();
 
-  private static Configuration configuration =
-      new Configuration(new MetadataSources().addResource("hibernate.cfg.xml"));
+  private static Configuration configuration = new Configuration();
   private static String configFile = CONFIG_FILE_LOCATION;
 
   private static SessionFactory sessionFactory;
@@ -70,9 +70,14 @@ public class HibernateSessionFactory {
 
   private static void configure() {
     try {
-//      new Configuration(new MetadataSources().addResource("hibernate.cfg.xml")).configure().buildSessionFactory();
+      configuration.addResource("hibernate.cfg.xml");
       configuration.configure(configFile);
-      sessionFactory = configuration.buildSessionFactory();
+
+      ServiceRegistryBuilder builder = new ServiceRegistryBuilder();
+      builder.applySettings(configuration.getProperties());
+      ServiceRegistry serviceRegistry = builder.buildServiceRegistry();
+
+      sessionFactory = configuration.buildSessionFactory(serviceRegistry);
     } catch (Exception e) {
 
       System.err.println("%%%% Error Creating SessionFactory %%%%");
