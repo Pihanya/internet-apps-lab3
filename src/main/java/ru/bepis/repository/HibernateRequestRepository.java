@@ -15,16 +15,16 @@ public class HibernateRequestRepository implements RequestRepository {
   private static Session sessionObject;
 
   public HibernateRequestRepository() {
-    /*if (Boolean.valueOf(System.getProperty("jsch.tunnel", "false"))) {
-      tryTunnel(
+    if (Boolean.valueOf(System.getProperty("jsch.tunnel", "false"))) {
+      /*tryTunnel(
           System.getProperty("jsch.sshHost", null), System.getProperty("jsch.host", null),
           Integer.parseInt(System.getProperty("jsch.port", "22")),
           Integer.parseInt(System.getProperty("jsch.lport", "5432")),
           Integer.parseInt(System.getProperty("jsch.rport", "5432")),
           Integer.parseInt(System.getProperty("jsch.timeout", "10000")),
           System.getProperty("jsch.user", null), System.getProperty("jsch.password", null)
-      );
-    }*/
+      );*/
+    }
 
     sessionObject = HibernateSessionFactory.getSession();
 
