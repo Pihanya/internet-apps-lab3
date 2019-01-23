@@ -27,23 +27,27 @@
         </tr>
         <tr id="content">
             <td id="left-content-column">
-                <p:dataTable value="#{requestsData.requests}"
+                <h:dataTable value="#{requestsData.requests}"
                              var="req"
                              id="history"
                              styleClass="inner">
-                    <p:column headerText="X">
-                        <h:outputText value="${req.x}"/>
-                    </p:column>
-                    <p:column headerText="Y">
-                        <h:outputText value="${req.y}"/>
-                    </p:column>
-                    <p:column headerText="R">
-                        <h:outputText value="${req.r}"/>
-                    </p:column>
-                    <p:column headerText="RESULT">
-                        <h:outputText value="${req.result}"/>
-                    </p:column>
-                </p:dataTable>
+                    <h:column>
+                        <f:facet name = "header">X</f:facet>
+                        ${req.x}
+                    </h:column>
+                    <h:column>
+                        <f:facet name = "header">Y</f:facet>
+                        ${req.y}
+                    </h:column>
+                    <h:column>
+                        <f:facet name = "header">Y</f:facet>
+                        ${req.r}
+                    </h:column>
+                    <h:column>
+                        <f:facet name = "header">RESULT</f:facet>
+                        ${req.result}
+                    </h:column>
+                </h:dataTable>
             </td>
             <td id="middle-content-column">
                 <h:form id="data-form">
