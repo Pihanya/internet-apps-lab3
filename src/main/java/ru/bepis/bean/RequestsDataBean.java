@@ -63,7 +63,7 @@ public class RequestsDataBean {
 
     RepositoryResponse<Void> response = repository.createTable();
     if(!response.isSuccess()) {
-      throw new RuntimeException("Could not create table during creation of request data bean", response.getException());
+      throw new RuntimeException("Could not create table during creation of request data bean: " + response.getException().getMessage());
     }
   }
 

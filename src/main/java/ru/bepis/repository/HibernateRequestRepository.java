@@ -1,6 +1,8 @@
 package ru.bepis.repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import ru.bepis.model.Request;
@@ -37,7 +39,6 @@ public class HibernateRequestRepository implements RequestRepository {
     try {
       transactionObject = sessionObject.beginTransaction();
       sessionObject.save(request);
-
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
       return RepositoryResponse.getFailResponseWith(ex);
@@ -52,7 +53,14 @@ public class HibernateRequestRepository implements RequestRepository {
 
     try {
       transactionObject = sessionObject.beginTransaction();
-      requests = sessionObject.createSQLQuery("SELECT * FROM request;").list();
+      SQLQuery query = sessionObject.createSQLQuery("SELECT * FROM request;");
+      List objects = query.list();
+
+      requests = new ArrayList<>(objects.size());
+      for(Object obj : objects) {
+        requests.add((Request) obj);
+      }
+
       return RepositoryResponse.getSuccessResponseWith(requests);
     } catch (Exception ex) {
       return RepositoryResponse.getFailResponseWith(ex);
@@ -65,7 +73,9 @@ public class HibernateRequestRepository implements RequestRepository {
   public RepositoryResponse<Void> deleteAllRequests() {
     try {
       transactionObject = sessionObject.beginTransaction();
-      sessionObject.createSQLQuery("DELETE FROM request");
+      SQLQuery query = sessionObject.createSQLQuery("DELETE FROM request");
+      query.executeUpdate();
+
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
       return RepositoryResponse.getFailResponseWith(ex);
@@ -78,14 +88,16 @@ public class HibernateRequestRepository implements RequestRepository {
   public RepositoryResponse<Void> createTable() {
     try {
       transactionObject = sessionObject.beginTransaction();
-      sessionObject.createSQLQuery("create table if not exists REQUEST (\n"
+      SQLQuery query = sessionObject.createSQLQuery("create table if not exists REQUEST (\n"
           + "   id     SERIAL NOT NULL,\n"
           + "   x      REAL   NOT NULL,\n"
           + "   y      REAL   NOT NULL,\n"
           + "   r      REAL   NOT NULL,\n"
           + "   result BOOLEAN NOT NULL,\n"
           + "   PRIMARY KEY (id)\n"
-          + ");").executeUpdate();
+          + ");");
+      query.executeUpdate();
+
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
       return RepositoryResponse.getFailResponseWith(ex);
@@ -100,7 +112,9 @@ public class HibernateRequestRepository implements RequestRepository {
   public RepositoryResponse<Void> dropTable() {
     try {
       transactionObject = sessionObject.beginTransaction();
-      sessionObject.createSQLQuery("drop table if exists REQUEST").executeUpdate();
+      SQLQuery query = sessionObject.createSQLQuery("drop table if exists REQUEST");
+      query.executeUpdate();
+
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
       return RepositoryResponse.getFailResponseWith(ex);

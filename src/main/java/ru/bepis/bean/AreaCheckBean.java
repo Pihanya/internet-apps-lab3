@@ -15,83 +15,83 @@ public class AreaCheckBean {
 
   private static final double EPS = DOUBLE_MACHINE_EPSILON;
 
-  private List<Double> xOptions = Arrays.asList(-2D, -1.5, -1D, -0.5, 0D, 0.5, 1D, 1D);
-  private List<Double> rOptions = Arrays.asList(1D, 1.5, 2D, 2.5, 3D);
+  private List<Double> xPossibleValues = Arrays.asList(-2D, -1.5, -1D, -0.5, 0D, 0.5, 1D, 2D);
+  private List<Double> rPossibleValues = Arrays.asList(1D, 1.5, 2D, 2.5, 3D);
 
-  private double selectedX = -2D;
-  private double yValue = 0;
-  private double selectedR = 1D;
+  private double currentXValue = -2D;
+  private double currentYValue = 0;
+  private double currentRValue = 1D;
 
-  private double hiddenX;
-  private double hiddenR;
-  private double hiddenY;
-  private String hiddenResult;
+  private double hiddenXValue;
+  private double hiddenRValue;
+  private double hiddenYValue;
+  private String hiddenResultValue;
 
-  public List<Double> getxOptions() {
-    return xOptions;
+  public List<Double> getxPossibleValues() {
+    return xPossibleValues;
   }
 
-  public void setxOptions(List<Double> xOptions) {
-    this.xOptions = xOptions;
+  public void setxPossibleValues(List<Double> xPossibleValues) {
+    this.xPossibleValues = xPossibleValues;
   }
 
-  public double getSelectedX() {
-    return selectedX;
+  public double getCurrentXValue() {
+    return currentXValue;
   }
 
-  public void setSelectedX(double selectedX) {
-    this.selectedX = selectedX;
+  public void setCurrentXValue(double xValue) {
+    this.currentXValue = xValue;
   }
 
-  public double getyValue() {
-    return yValue;
+  public double getCurrentYValue() {
+    return currentYValue;
   }
 
-  public void setyValue(double yValue) {
-    this.yValue = yValue;
+  public void setCurrentYValue(double currentYValue) {
+    this.currentYValue = currentYValue;
   }
 
-  public List<Double> getrOptions() {
-    return rOptions;
+  public List<Double> getrPossibleValues() {
+    return rPossibleValues;
   }
 
-  public void setrOptions(List<Double> rOptions) {
-    this.rOptions = rOptions;
+  public void setrPossibleValues(List<Double> rPossibleValues) {
+    this.rPossibleValues = rPossibleValues;
   }
 
-  public double getSelectedR() {
-    return selectedR;
+  public double getCurrentRValue() {
+    return currentRValue;
   }
 
-  public void setSelectedR(double selectedR) {
-    this.selectedR = selectedR;
+  public void setCurrentRValue(double currentRValue) {
+    this.currentRValue = currentRValue;
   }
 
-  public double getHiddenX() {
-    return hiddenX;
+  public double getHiddenXValue() {
+    return hiddenXValue;
   }
 
-  public void setHiddenX(double hiddenX) {
-    this.hiddenX = hiddenX;
+  public void setHiddenXValue(double hiddenXValue) {
+    this.hiddenXValue = hiddenXValue;
   }
 
-  public double getHiddenR() {
-    return hiddenR;
+  public double getHiddenRValue() {
+    return hiddenRValue;
   }
 
-  public void setHiddenR(double hiddenR) {
-    this.hiddenR = hiddenR;
+  public void setHiddenRValue(double hiddenRValue) {
+    this.hiddenRValue = hiddenRValue;
   }
 
-  public double getHiddenY() {
-    return hiddenY;
+  public double getHiddenYValue() {
+    return hiddenYValue;
   }
 
-  public void setHiddenY(double hiddenY) {
-    this.hiddenY = hiddenY;
+  public void setHiddenYValue(double hiddenYValue) {
+    this.hiddenYValue = hiddenYValue;
   }
 
-  public static boolean validate(double x, double y, double r) {
+  public static boolean validateGraph(double x, double y, double r) {
     if (Math.abs(y) <= EPS) {
       return r - Math.abs(x) >= 0;
     }
@@ -112,18 +112,18 @@ public class AreaCheckBean {
   }
 
   public boolean isValidPoint() {
-    return validate(selectedX, yValue, selectedR);
+    return validateGraph(currentXValue, currentYValue, currentRValue);
   }
 
-  public String getHiddenResult() {
-    return hiddenResult;
+  public String getHiddenResultValue() {
+    return hiddenResultValue;
   }
 
-  public void setHiddenResult(String hiddenResult) {
-    this.hiddenResult = hiddenResult;
+  public void setHiddenResultValue(String hiddenResultValue) {
+    this.hiddenResultValue = hiddenResultValue;
   }
 
   public void validateFromGraph() {
-    hiddenResult = validate(hiddenX, hiddenY, hiddenR) ? "true" : "false";
+    hiddenResultValue = validateGraph(hiddenXValue, hiddenYValue, hiddenRValue) ? "true" : "false";
   }
 }

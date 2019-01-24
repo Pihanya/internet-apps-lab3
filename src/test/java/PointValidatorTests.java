@@ -10,7 +10,7 @@ public class PointValidatorTests {
 
   private static final double R = 2.0D;
 
-  private Predicate<Point> checker = (point) -> AreaCheckBean.validate(R*point.x, R*point.y, R);
+  private Predicate<Point> checker = (point) -> AreaCheckBean.validateGraph(R*point.x, R*point.y, R);
 
   @Test
   public void upperRightNegativeTest() {
