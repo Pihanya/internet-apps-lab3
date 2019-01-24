@@ -5,13 +5,13 @@ import ru.bepis.model.Request;
 
 public interface RequestRepository {
 
-  void addRequest(Request request);
+  RepositoryResponse<Void> addRequest(Request request);
 
-  List<Request> getAllRequests();
+  RepositoryResponse<List<Request>> getAllRequests();
 
-  void deleteAllRequests();
+  RepositoryResponse<Void> deleteAllRequests();
 
-  void createTable();
+  RepositoryResponse<Void> createTable();
 
-  void dropTable();
+  RepositoryResponse<Void> dropTable();
 }

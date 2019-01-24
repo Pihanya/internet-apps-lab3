@@ -1,6 +1,5 @@
 package ru.bepis.bean;
 
-import com.jcraft.jsch.JSchException;
 import java.util.Collections;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
@@ -8,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import lombok.Data;
 import ru.bepis.model.Request;
 import ru.bepis.repository.HibernateRequestRepository;
+import ru.bepis.repository.RepositoryResponse;
 import ru.bepis.repository.RequestRepository;
 
 @ManagedBean(name = "requestsData")
@@ -53,7 +53,7 @@ public class RequestsDataBean {
     this.result = result;
   }
 
-  public RequestsDataBean() throws JSchException {
+  public RequestsDataBean() {
     this(new HibernateRequestRepository());
   }
 
@@ -63,11 +63,14 @@ public class RequestsDataBean {
 
   public List<Request> getRequests() {
     try {
-      requests = repository.getAllRequests();
-      for (Request r : requests) {
-        r.setX(r.getX());
+      RepositoryResponse<List<Request>> response = repository.getAllRequests();
+      if(response.isSuccess()) {
+        List<Request> requests = response.getResult();
+        return requests.subList(Math.max(0, requests.size() - 10), requests.size()); // todo normalize
+      } else {
+        // todo implement behaviour
+        return Collections.emptyList();
       }
-      return requests.subList(Math.max(0, requests.size() - 10), requests.size());
     } catch (Exception ex) {
       return Collections.emptyList();
     }

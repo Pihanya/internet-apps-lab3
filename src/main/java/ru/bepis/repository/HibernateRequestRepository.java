@@ -1,13 +1,11 @@
 package ru.bepis.repository;
 
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
 import java.util.List;
-import java.util.Properties;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import ru.bepis.model.Request;
-import ru.bepis.util.HibernateSessionFactory;
+import ru.bepis.repository.session.SessionSupplier;
+import ru.bepis.repository.session.SessionSupplierFactoryMethods;
 
 public class HibernateRequestRepository implements RequestRepository {
 
@@ -15,62 +13,70 @@ public class HibernateRequestRepository implements RequestRepository {
   private static Session sessionObject;
 
   public HibernateRequestRepository() {
-    if (Boolean.valueOf(System.getProperty("jsch.tunnel", "false"))) {
-      /*tryTunnel(
-          System.getProperty("jsch.sshHost", null), System.getProperty("jsch.host", null),
-          Integer.parseInt(System.getProperty("jsch.port", "22")),
-          Integer.parseInt(System.getProperty("jsch.lport", "5432")),
-          Integer.parseInt(System.getProperty("jsch.rport", "5432")),
-          Integer.parseInt(System.getProperty("jsch.timeout", "10000")),
-          System.getProperty("jsch.user", null), System.getProperty("jsch.password", null)
-      );*/
+    SessionSupplier supplier;
+    if (Boolean.valueOf(getSystemProperty("jsch.tunnel", "false"))) {
+      supplier = SessionSupplierFactoryMethods.getJSCHForwaredHibernateSessionSupplier(
+          getSystemProperty("jsch.sshHost", null),
+          getSystemProperty("jsch.host", null),
+          Integer.parseInt(getSystemProperty("jsch.port", "22")),
+          Integer.parseInt(getSystemProperty("jsch.lport", "5432")),
+          Integer.parseInt(getSystemProperty("jsch.rport", "5432")),
+          Integer.parseInt(getSystemProperty("jsch.timeout", "10000")),
+          getSystemProperty("jsch.user", null),
+          getSystemProperty("jsch.password", null)
+      );
+    } else {
+      supplier = SessionSupplierFactoryMethods.getHibernateSessionSupplier();
     }
 
-    sessionObject = HibernateSessionFactory.getSession();
-
+    sessionObject = supplier.supplySession();
     createTable();
   }
 
   @Override
-  public void addRequest(Request request) {
+  public RepositoryResponse<Void> addRequest(Request request) {
     try {
       transactionObject = sessionObject.beginTransaction();
       sessionObject.save(request);
+
+      return RepositoryResponse.getSuccessResponseWith(null);
+    } catch (Exception ex) {
+      return RepositoryResponse.getFailResponseWith(ex);
     } finally {
       transactionObject.commit();
     }
   }
 
   @Override
-  public List<Request> getAllRequests() {
+  public RepositoryResponse<List<Request>> getAllRequests() {
     List<Request> requests;
 
     try {
       transactionObject = sessionObject.beginTransaction();
       requests = sessionObject.createSQLQuery("SELECT * FROM request;").list();
-//      Query query = sessionObject.createQuery("from Request");
-//      requests = (List<Request>) query.list();
+      return RepositoryResponse.getSuccessResponseWith(requests);
+    } catch (Exception ex) {
+      return RepositoryResponse.getFailResponseWith(ex);
     } finally {
       transactionObject.commit();
     }
-
-    return requests;
   }
 
   @Override
-  public void deleteAllRequests() {
+  public RepositoryResponse<Void> deleteAllRequests() {
     try {
       transactionObject = sessionObject.beginTransaction();
       sessionObject.createSQLQuery("DELETE FROM request");
-//      Query query = sessionObject.createQuery("delete from Request");
-//      query.executeUpdate();
+      return RepositoryResponse.getSuccessResponseWith(null);
+    } catch (Exception ex) {
+      return RepositoryResponse.getFailResponseWith(ex);
     } finally {
       transactionObject.commit();
     }
   }
 
   @Override
-  public void createTable() {
+  public RepositoryResponse<Void> createTable() {
     try {
       transactionObject = sessionObject.beginTransaction();
       sessionObject.createSQLQuery("create table if not exists REQUEST (\n"
@@ -81,6 +87,9 @@ public class HibernateRequestRepository implements RequestRepository {
           + "   result BOOLEAN NOT NULL,\n"
           + "   PRIMARY KEY (id)\n"
           + ");").executeUpdate();
+      return RepositoryResponse.getSuccessResponseWith(null);
+    } catch (Exception ex) {
+      return RepositoryResponse.getFailResponseWith(ex);
     } finally {
       if (transactionObject != null) {
         transactionObject.commit();
@@ -89,32 +98,19 @@ public class HibernateRequestRepository implements RequestRepository {
   }
 
   @Override
-  public void dropTable() {
+  public RepositoryResponse<Void> dropTable() {
     try {
       transactionObject = sessionObject.beginTransaction();
       sessionObject.createSQLQuery("drop table if exists REQUEST").executeUpdate();
+      return RepositoryResponse.getSuccessResponseWith(null);
+    } catch (Exception ex) {
+      return RepositoryResponse.getFailResponseWith(ex);
     } finally {
       transactionObject.commit();
     }
   }
 
-  private static void tryTunnel(String sshHost, String host, int port, int lport, int rport,
-      int timeout, String user, String password) {
-    if (sshHost != null && host != null && user != null && password != null) {
-      try {
-        JSch jsch = new JSch();
-        com.jcraft.jsch.Session session = jsch.getSession(user, sshHost, port);
-        session.setPassword(password);
-
-        Properties config = new Properties();
-        config.put("StrictHostKeyChecking", "no");
-        session.setConfig(config);
-
-        session.connect(timeout);
-        session.setPortForwardingL(lport, host, rport);
-      } catch (JSchException ex) {
-        ex.printStackTrace();
-      }
-    }
+  private static String getSystemProperty(String propName, String defaultValue) {
+    return System.getProperty(propName, defaultValue);
   }
 }

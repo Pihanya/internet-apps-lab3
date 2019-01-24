@@ -16,11 +16,10 @@ public class AreaCheckBean {
   private static final double EPS = DOUBLE_MACHINE_EPSILON;
 
   private List<Double> xOptions = Arrays.asList(-2D, -1.5, -1D, -0.5, 0D, 0.5, 1D, 1D);
-  private double selectedX = -2D;
-
-  private double yValue = 0;
-
   private List<Double> rOptions = Arrays.asList(1D, 1.5, 2D, 2.5, 3D);
+
+  private double selectedX = -2D;
+  private double yValue = 0;
   private double selectedR = 1D;
 
   private double hiddenX;
@@ -93,10 +92,6 @@ public class AreaCheckBean {
   }
 
   public static boolean validate(double x, double y, double r) {
-    System.out.println("R: " + r);
-    System.out.println("X: " + x);
-    System.out.println("Y: " + y);
-
     if (Math.abs(y) <= EPS) {
       return r - Math.abs(x) >= 0;
     }
