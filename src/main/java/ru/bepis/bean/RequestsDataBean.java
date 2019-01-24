@@ -19,6 +19,7 @@ public class RequestsDataBean {
   private double y;
   private double r;
   private String result;
+  private List<Request> requests;
 
   public double getX() {
     return x;
@@ -62,7 +63,7 @@ public class RequestsDataBean {
 
   public List<Request> getRequests() {
     try {
-      List<Request> requests = repository.getAllRequests();
+      requests = repository.getAllRequests();
       for (Request r : requests) {
         r.setX(r.getX());
       }

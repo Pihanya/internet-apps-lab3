@@ -89,7 +89,7 @@
                     <h:inputHidden value="#{requestsData.y}" id="db-y"/>
                     <h:inputHidden value="#{requestsData.r}" id="db-r"/>
                     <h:inputHidden value="#{requestsData.result}" id="db-result"/>
-                    <p:remoteCommand name="writeDB" update="history"
+                    <p:remoteCommand name="writeDB" update="@(#history)"
                                      action="#{requestsData.addRequest()}"/>
                 </h:form>
             </td>
