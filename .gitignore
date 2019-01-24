@@ -1,5 +1,6 @@
 # Idea project files
 .idea/*
+*.iml
 
 # Project compile output
 out/*
