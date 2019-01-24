@@ -30,7 +30,6 @@ public class HibernateRequestRepository implements RequestRepository {
     }
 
     sessionObject = supplier.supplySession();
-    createTable();
   }
 
   @Override

@@ -8,7 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import lombok.Data;
 
-@ManagedBean(name = "areaCheck")
+@ManagedBean(name = "areaCheck", eager = true)
 @RequestScoped
 @Data
 public class AreaCheckBean {

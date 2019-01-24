@@ -10,10 +10,11 @@ import ru.bepis.repository.HibernateRequestRepository;
 import ru.bepis.repository.RepositoryResponse;
 import ru.bepis.repository.RequestRepository;
 
-@ManagedBean(name = "requestsData")
+@ManagedBean(name = "requestsData", eager = true)
 @ApplicationScoped
 @Data
 public class RequestsDataBean {
+
   private RequestRepository repository;
   private double x;
   private double y;
@@ -59,19 +60,20 @@ public class RequestsDataBean {
 
   public RequestsDataBean(RequestRepository repository) {
     this.repository = repository;
+
+    RepositoryResponse<Void> response = repository.createTable();
+    if(!response.isSuccess()) {
+      throw new RuntimeException("Could not create table during creation of request data bean", response.getException());
+    }
   }
 
   public List<Request> getRequests() {
-    try {
-      RepositoryResponse<List<Request>> response = repository.getAllRequests();
-      if(response.isSuccess()) {
-        List<Request> requests = response.getResult();
-        return requests.subList(Math.max(0, requests.size() - 10), requests.size()); // todo normalize
-      } else {
-        // todo implement behaviour
-        return Collections.emptyList();
-      }
-    } catch (Exception ex) {
+    RepositoryResponse<List<Request>> response = repository.getAllRequests();
+    if (response.isSuccess()) {
+      List<Request> requests = response.getResult();
+      return requests.subList(Math.max(0, requests.size() - 10), requests.size()); // todo normalize
+    } else {
+      // todo implement behaviour
       return Collections.emptyList();
     }
   }
@@ -79,11 +81,13 @@ public class RequestsDataBean {
   public Request addRequest() {
     boolean res = Boolean.parseBoolean(result);
     Request request = new Request(x, y, r, res);
-    System.out.println("Added " + request.toString());
-    try {
-      repository.addRequest(request);
+
+    RepositoryResponse<Void> response = repository.addRequest(request);
+    if(response.isSuccess()) {
+      System.out.println("Added " + request.toString());
       return request;
-    } catch (Exception ex) {
+    } else {
+      System.out.println("Could not add given request: " + response.getException().getMessage());
       return null;
     }
   }
