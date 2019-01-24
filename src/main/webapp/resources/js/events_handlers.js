@@ -6,36 +6,32 @@ function onFormSubmit() {
   let rField = document.getElementById("data-form:r");
   let form = document.querySelector("#data-form");
 
-  let valid = true;
-
-  // let message = "<b>Форма содержит следующие ошибки:</b><br>";
-  let message = "<b>There are the following errors in the form:</b><br>";
+  let errorMessageBody = "<b>There are the following errors in the form:</b><br>";
 
   let valueX = xField.options[xField.selectedIndex].value;
   let valueY = yField.value;
-
+  let valid = true;
   if (isNaN(+(valueY))) {
-    // message += "Значение Y должно быть числом<br>";
-    message += "Y values should be a number<br>";
+    errorMessageBody += "Y values should be a number<br>";
     valid = false;
   } else if (valueY.length > 12) {
-    // message += "Длина строки с Y не должна превышать 12 символов<br>";
-    message += "The length of the Y should not exceed 12 symbols<br>";
+    errorMessageBody += "The length of the Y should not exceed 12 symbols<br>";
     valid = false;
   } else if (parseFloat(valueY) < -3 || parseFloat(valueY) > 3) {
-    // message += "Y должен принадлежать промежутку [-5; 5]<br>";
-    message += "Y value should be in interval [-5; 5]<br>";
+    errorMessageBody += "Y value should be in interval [-5; 5]<br>";
     valid = false;
   }
 
   if (!valid) {
-    document.getElementById("errors").innerHTML = message;
+    document.getElementById("errors").innerHTML = errorMessageBody;
     return;
   }
 
   let x = valueX * 130 + 150;
   let y = 150 - valueY * 130;
+
   console.log("Checking point: " + x + " " + y);
+
   isArea(x, y, currentR);
 
 }

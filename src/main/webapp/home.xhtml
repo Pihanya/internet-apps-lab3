@@ -53,20 +53,20 @@
                 <h:form id="data-form">
                     <fieldset>
                         <legend>Значение X</legend>
-                        <h:selectOneMenu styleClass="input-class" value="#{areaCheck.selectedX}"
+                        <h:selectOneMenu styleClass="input-class" value="#{areaCheck.currentXValue}"
                                          id="x">
-                            <f:selectItems value="#{areaCheck.xOptions}"/>
+                            <f:selectItems value="#{areaCheck.xPossibleValues}"/>
                         </h:selectOneMenu>
                     </fieldset>
                     <fieldset>
                         <legend>Значение Y</legend>
-                        <h:inputText styleClass="input-class" value="#{areaCheck.yValue}" id="y"/>
+                        <h:inputText styleClass="input-class" value="#{areaCheck.currentYValue}" id="y"/>
                     </fieldset>
                     <fieldset>
                         <legend>Значение R</legend>
-                        <h:selectOneMenu styleClass="input-class" value="#{areaCheck.selectedR}"
+                        <h:selectOneMenu styleClass="input-class" value="#{areaCheck.currentRValue}"
                                          id="r" onchange="onRadiusInput()">
-                            <f:selectItems value="#{areaCheck.rOptions}"/>
+                            <f:selectItems value="#{areaCheck.rPossibleValues}"/>
                         </h:selectOneMenu>
                     </fieldset>
                     <img src="https://imgur.com/WUhMfE6" onmousedown="onFormSubmit()"
@@ -75,10 +75,10 @@
                 <div id="errors"></div>
 
                 <h:form id="graph-controls">
-                    <h:inputHidden value="#{areaCheck.hiddenX}" id="hidden-x"/>
-                    <h:inputHidden value="#{areaCheck.hiddenY}" id="hidden-y"/>
-                    <h:inputHidden value="#{areaCheck.hiddenR}" id="hidden-r"/>
-                    <h:inputHidden value="#{areaCheck.hiddenResult}" id="result"/>
+                    <h:inputHidden value="#{areaCheck.hiddenXValue}" id="hidden-x"/>
+                    <h:inputHidden value="#{areaCheck.hiddenYValue}" id="hidden-y"/>
+                    <h:inputHidden value="#{areaCheck.hiddenRValue}" id="hidden-r"/>
+                    <h:inputHidden value="#{areaCheck.hiddenResultValue}" id="result"/>
                     <p:remoteCommand name="validateGraph" update="result"
                                      action="#{areaCheck.validateFromGraph()}"
                                      oncomplete="drawPoint()"/>

@@ -1,5 +1,5 @@
-let lastX = 0;
-let lastY = 0;
+var lastX = 0;
+var lastY = 0;
 
 function drawCanvas(r) {
   let canvas = document.querySelector("#canvas");
@@ -19,7 +19,7 @@ function drawCanvas(r) {
   // сектор
   context.beginPath();
   context.moveTo(150, 150);
-  context.arc(150, 150, 130 , 0, Math.PI / 2, false);
+  context.arc(150, 150, 130, 0, Math.PI / 2, false);
   context.closePath();
   context.strokeStyle = "blue";
   context.fillStyle = "blue";
@@ -90,10 +90,11 @@ function drawCanvas(r) {
 }
 
 function drawPoint() {
-  let canvas = document.querySelector("#canvas");
-  let context = canvas.getContext("2d");
   let x = lastX;
   let y = lastY;
+
+  let canvas = document.querySelector("#canvas");
+  let context = canvas.getContext("2d");
   let result = document.getElementById("graph-controls:result").value;
   let isArea = (result === "true");
 
@@ -114,8 +115,10 @@ function drawPoint() {
   let dbX = document.getElementById("db-inputs:db-x");
   let dbY = document.getElementById("db-inputs:db-y");
   let dbR = document.getElementById("db-inputs:db-r");
+
   x = (x - 150) / 130;
   y = (150 - y) / 130;
+
   dbX.value = x;
   dbY.value = y;
   dbR.value = currentR;
@@ -134,13 +137,35 @@ function checkPoint(x, y, r) {
   let hiddenY = document.getElementById("graph-controls:hidden-y");
   let hiddenR = document.getElementById("graph-controls:hidden-r");
   let hiddenResult = document.getElementById("graph-controls:result");
+
+  console.log(
+      "[checkPoint] Hidden values: "
+      + "{"
+      + "X: " + hiddenX + ", "
+      + "Y: " + hiddenY + ", "
+      + "R: " + hiddenR + ", "
+      + "Result: " + hiddenResult
+      + "}");
+
   hiddenX.value = (r * ((x - 150) / 130));
   hiddenY.value = (r * ((150 - y) / 130));
+
   hiddenX.value = parseFloat(hiddenX.value.toString()).toFixed(3);
   hiddenY.value = parseFloat(hiddenY.value.toString()).toFixed(3);
   hiddenR.value = r;
+
   lastX = x;
   lastY = y;
+
+  console.log(
+      "[checkPoint] Hidden values after processing: "
+      + "{"
+      + "X: " + hiddenX + ", "
+      + "Y: " + hiddenY + ", "
+      + "R: " + hiddenR + ", "
+      + "Result: " + hiddenResult
+      + "}");
+
   validateGraph();
 }
 
