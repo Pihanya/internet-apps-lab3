@@ -5,6 +5,7 @@ function onFormSubmit() {
   let yField = document.getElementById("data-form:y");
   let rField = document.getElementById("data-form:r");
   let form = document.querySelector("#data-form");
+  currentR = rField.value;
 
   let errorMessageBody = "<b>There are the following errors in the form:</b><br>";
 
@@ -27,12 +28,12 @@ function onFormSubmit() {
     return;
   }
 
-  let x = valueX * 130 + 150;
-  let y = 150 - valueY * 130;
+  let x = (valueX * 130 + 150) / currentR;
+  let y = (150 - valueY * 130) / currentR;
 
   console.log("Checking point: " + x + " " + y);
 
-  isArea(x, y, currentR);
+  checkPoint(x, y, currentR);
 
 }
 

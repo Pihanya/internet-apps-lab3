@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<head>
+  <title>Test</title>
+</head>
+<body>
+<h:form id="data-form">
+  <fieldset>
+    <legend>Значение X</legend>
+    <h:selectOneMenu styleClass="input-class" value="#{areaCheck.currentXValue}"
+                     id="x">
+      <f:selectItems value="#{areaCheck.xPossibleValues}"/>
+    </h:selectOneMenu>
+  </fieldset>
+  <fieldset>
+    <legend>Значение Y</legend>
+    <h:inputText styleClass="input-class" value="#{areaCheck.currentYValue}" id="y"/>
+  </fieldset>
+  <fieldset>
+    <legend>Значение R</legend>
+    <h:selectOneMenu styleClass="input-class" value="#{areaCheck.currentRValue}"
+                     id="r" onchange="onRadiusInput()">
+      <f:selectItems value="#{areaCheck.rPossibleValues}"/>
+    </h:selectOneMenu>
+  </fieldset>
+  <button onmousedown="onFormSubmit()">Отправить</button>
+</h:form>
+<div id="errors"></div>
+<h:form id="graph-controls">
+  <h:inputHidden value="#{areaCheck.hiddenXValue}" id="hidden-x"/>
+  <h:inputHidden value="#{areaCheck.hiddenYValue}" id="hidden-y"/>
+  <h:inputHidden value="#{areaCheck.hiddenRValue}" id="hidden-r"/>
+  <h:inputText value="#{areaCheck.hiddenResultValue}" id="result"/>
+  <p:remoteCommand name="validateGraph" update="result"
+                   action="#{areaCheck.validateFromGraph()}"
+                   />
+</h:form>
+</body>
+</html>
