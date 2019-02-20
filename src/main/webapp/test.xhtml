@@ -6,9 +6,9 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-<head>
+<h:head>
   <title>Test</title>
-</head>
+</h:head>
 <body>
 <h:form id="data-form">
   <h:outputScript library="js" name="canvas.js"/>
@@ -31,7 +31,7 @@
       <f:selectItems value="#{areaCheck.rPossibleValues}"/>
     </h:selectOneMenu>
   </fieldset>
-  <button onmousedown="onFormSubmit()">Отправить</button>
+  <img src="https://www.formstack.com/blog/wp-content/uploads/2011/06/submit_button_large_red1.jpg" alt="Submit" onmousedown="onFormSubmit()"/>
 </h:form>
 <div id="errors"></div>
 <h:form id="graph-controls">
