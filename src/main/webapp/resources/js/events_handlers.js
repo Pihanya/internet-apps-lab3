@@ -30,12 +30,9 @@ function onFormSubmit() {
     return;
   }
 
-  let x = (valueX * 130 + 150) / currentR;
-  let y = (150 - valueY * 130) / currentR;
+  console.log("Checking point: " + valueX + " " + valueY);
 
-  console.log("Checking point: " + x + " " + y);
-
-  checkPoint(x, y, currentR);
+  checkPoint(valueX, valueY, currentR);
 
 }
 
