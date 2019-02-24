@@ -1,5 +1,6 @@
 let lastX = 0;
 let lastY = 0;
+let lastR = 0;
 
 function drawCanvas(r) {
   let canvas = document.querySelector("#canvas");
@@ -90,10 +91,15 @@ function drawCanvas(r) {
 }
 
 function drawPoint() {
+  console.log(lastX + " " + lastY + " " + lastR);
   let canvas = document.querySelector("#canvas");
   let context = canvas.getContext("2d");
   let x = lastX;
   let y = lastY;
+  if (isClick) {
+    x = ((x * 130) + 150) / lastR;
+    y = (150 - (y * 130)) / lastR;
+  }
   let result = document.getElementById("graph-controls:result").value;
   let isArea = (result === "true");
 
@@ -109,18 +115,7 @@ function drawPoint() {
   }
   context.fill();
   context.stroke();
-
-  let dbResult = document.getElementById("db-inputs:db-result");
-  let dbX = document.getElementById("db-inputs:db-x");
-  let dbY = document.getElementById("db-inputs:db-y");
-  let dbR = document.getElementById("db-inputs:db-r");
-  x = r * (x - 150) / 130;
-  y = r * (150 - y) / 130;
-  dbX.value = x;
-  dbY.value = y;
-  dbR.value = currentR;
-  dbResult.value = result;
-  writeDB();
+  //updateTable();
 }
 
 // todo
@@ -129,13 +124,22 @@ function checkPoint(x, y, r) {
   let hiddenY = document.getElementById("graph-controls:hidden-y");
   let hiddenR = document.getElementById("graph-controls:hidden-r");
   let hiddenResult = document.getElementById("graph-controls:result");
-  hiddenX.value = (r * ((x - 150) / 130));
-  hiddenY.value = (r * ((150 - y) / 130));
-  hiddenX.value = parseFloat(hiddenX.value.toString()).toFixed(3);
-  hiddenY.value = parseFloat(hiddenY.value.toString()).toFixed(3);
+  if (isClick) {
+    //hiddenX.value = ((x * 130) + 150) / r;
+    //hiddenY.value = (150 - (y * 130)) / r;
+    hiddenX.value = (r * ((x - 150) / 130));
+    hiddenY.value = (r * ((150 - y) / 130));
+    hiddenX.value = parseFloat(hiddenX.value.toString()).toFixed(3);
+    hiddenY.value = parseFloat(hiddenY.value.toString()).toFixed(3);
+  }
+  else {
+    hiddenX.value = x;
+    hiddenY.value = y;
+  }
   hiddenR.value = r;
-  lastX = x;
-  lastY = y;
+  lastX = hiddenX.value;
+  lastY = hiddenY.value;
+  lastR = hiddenR.value;
   validateGraph();
 }
 
@@ -161,4 +165,18 @@ function checkPointLocally(x, y, r) {
   }
 
   return res;
+}
+
+function writeDB() {
+  drawPoint();
+  let dbResult = document.getElementById("db-inputs:db-result");
+  let dbX = document.getElementById("db-inputs:db-x");
+  let dbY = document.getElementById("db-inputs:db-y");
+  let dbR = document.getElementById("db-inputs:db-r");
+  let result = document.getElementById("graph-controls:result").value;
+  dbX.value = lastX;
+  dbY.value = lastY;
+  dbR.value = lastR;
+  dbResult.value = result;
+  save();
 }

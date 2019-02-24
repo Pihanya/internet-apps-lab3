@@ -41,7 +41,16 @@
   <h:inputText value="#{areaCheck.hiddenResultValue}" id="result"/>
   <p:remoteCommand name="validateGraph" update="result"
                    action="#{areaCheck.validateFromGraph()}"
+                   oncomplete="writeDB();"
                    />
+</h:form>
+<h:form id="db-inputs">
+  <h:inputHidden value="#{requestsData.x}" id="db-x"/>
+  <h:inputHidden value="#{requestsData.y}" id="db-y"/>
+  <h:inputHidden value="#{requestsData.r}" id="db-r"/>
+  <h:inputHidden value="#{requestsData.result}" id="db-result"/>
+  <p:remoteCommand name="save" update="@(#history)"
+                   action="#{requestsData.addRequest()}"/>
 </h:form>
 </body>
 </html>

@@ -1,6 +1,8 @@
 var currentR = 1;
+let isClick = false;
 
 function onFormSubmit() {
+  isClick = false;
   let xField = document.getElementById("data-form:x");
   let yField = document.getElementById("data-form:y");
   let rField = document.getElementById("data-form:r");
@@ -45,6 +47,7 @@ function onRadiusInput() {
 }
 
 function onCanvasClick(event) {
+  isClick = true;
   var canvas = document.querySelector("#canvas");
   var rect = canvas.getBoundingClientRect();
 
@@ -53,6 +56,7 @@ function onCanvasClick(event) {
 
   var x = event.clientX - left;
   var y = event.clientY - top;
+  console.log("Raw data: " + x + " " + y);
 
-  isArea(x, y, currentR);
+  checkPoint(x, y, currentR);
 }

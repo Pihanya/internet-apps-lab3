@@ -16,6 +16,16 @@ public class RepositoryResponse<T> {
   private Exception exception;
   private T result;
 
+  public Exception getException() {
+    return exception;
+  }
+
+
+
+  public T getResult() {
+    return result;
+  }
+
   public static <T> RepositoryResponse<T> getSuccessResponseWith(T result) {
     return new RepositoryResponse<T>()
         .withSuccess(true)

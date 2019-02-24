@@ -1,9 +1,14 @@
 package ru.bepis.bean;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import lombok.Data;
 import ru.bepis.model.Request;
 import ru.bepis.repository.HibernateRequestRepository;
@@ -11,7 +16,7 @@ import ru.bepis.repository.RepositoryResponse;
 import ru.bepis.repository.RequestRepository;
 
 @ManagedBean(name = "requestsData", eager = true)
-@ApplicationScoped
+@SessionScoped
 @Data
 public class RequestsDataBean {
 
@@ -21,6 +26,7 @@ public class RequestsDataBean {
   private double r;
   private String result;
   private List<Request> requests;
+  private int size = 0;
 
   public double getX() {
     return x;
@@ -58,6 +64,8 @@ public class RequestsDataBean {
     this(new HibernateRequestRepository());
   }
 
+  public int getSize() { return size; }
+
   public RequestsDataBean(RequestRepository repository) {
     this.repository = repository;
 
@@ -69,10 +77,14 @@ public class RequestsDataBean {
 
   public List<Request> getRequests() {
     RepositoryResponse<List<Request>> response = repository.getAllRequests();
+
     if (response.isSuccess()) {
       List<Request> requests = response.getResult();
-      return requests.subList(Math.max(0, requests.size() - 10), requests.size()); // todo normalize
+      size = requests.size();
+      return requests;
+      //return requests.subList(Math.max(0, requests.size() - 10), requests.size()); // todo normalize
     } else {
+      size = -1;
       // todo implement behaviour
       return Collections.emptyList();
     }
