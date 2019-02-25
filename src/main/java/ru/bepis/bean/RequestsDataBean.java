@@ -1,14 +1,9 @@
 package ru.bepis.bean;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import lombok.Data;
 import ru.bepis.model.Request;
 import ru.bepis.repository.HibernateRequestRepository;
@@ -64,7 +59,9 @@ public class RequestsDataBean {
     this(new HibernateRequestRepository());
   }
 
-  public int getSize() { return size; }
+  public int getSize() {
+    return size;
+  }
 
   public RequestsDataBean(RequestRepository repository) {
     this.repository = repository;
@@ -95,7 +92,7 @@ public class RequestsDataBean {
     Request request = new Request(x, y, r, res);
 
     RepositoryResponse<Void> response = repository.addRequest(request);
-    if(response.isSuccess()) {
+    if (response.isSuccess()) {
       System.out.println("Added " + request.toString());
       return request;
     } else {

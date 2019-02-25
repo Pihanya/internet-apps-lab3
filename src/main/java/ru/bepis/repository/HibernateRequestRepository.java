@@ -1,13 +1,14 @@
 package ru.bepis.repository;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import ru.bepis.model.Request;
 import ru.bepis.repository.session.SessionSupplier;
 import ru.bepis.repository.session.SessionSupplierFactoryMethods;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HibernateRequestRepository implements RequestRepository {
 
@@ -57,7 +58,7 @@ public class HibernateRequestRepository implements RequestRepository {
       List objects = query.list();
 
       requests = new ArrayList<>(objects.size());
-      for(Object obj : objects) {
+      for (Object obj : objects) {
         requests.add((Request) obj);
       }
 

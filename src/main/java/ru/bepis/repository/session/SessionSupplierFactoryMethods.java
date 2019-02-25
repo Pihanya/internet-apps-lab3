@@ -2,8 +2,9 @@ package ru.bepis.repository.session;
 
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
+import ru.bepis.utils.HibernateSessionFactory;
+
 import java.util.Properties;
-import ru.bepis.util.HibernateSessionFactory;
 
 public class SessionSupplierFactoryMethods {
 

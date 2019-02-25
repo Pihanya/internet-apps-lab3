@@ -1,6 +1,6 @@
 package ru.bepis.bean;
 
-import static ru.bepis.util.ConstantValues.DOUBLE_MACHINE_EPSILON;
+import static ru.bepis.utils.ConstantValues.DOUBLE_MACHINE_EPSILON;
 
 import java.util.Arrays;
 import java.util.List;

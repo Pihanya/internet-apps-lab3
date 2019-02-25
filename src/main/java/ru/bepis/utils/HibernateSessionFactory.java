@@ -1,4 +1,4 @@
-package ru.bepis.util;
+package ru.bepis.utils;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -58,7 +58,6 @@ public class HibernateSessionFactory {
     }
 
     return session;
-
   }
 
   /**
@@ -79,10 +78,8 @@ public class HibernateSessionFactory {
 
       sessionFactory = configuration.buildSessionFactory(serviceRegistry);
     } catch (Exception e) {
-
       System.err.println("%%%% Error Creating SessionFactory %%%%");
       e.printStackTrace();
-
     }
   }
 
@@ -95,11 +92,8 @@ public class HibernateSessionFactory {
     LOCAL_SESSION.set(null);
 
     if (session != null) {
-
       session.close();
-
     }
-
   }
 
   /**
@@ -111,23 +105,19 @@ public class HibernateSessionFactory {
 
   /**
    * return session factory
-   *
+   * <p>
    * session factory will be rebuilded in the next call
    */
   public static void setConfigFile(String configFile) {
-
     HibernateSessionFactory.configFile = configFile;
     sessionFactory = null;
-
   }
 
   /**
    * return hibernate configuration
    */
   public static Configuration getConfiguration() {
-
     return configuration;
-
   }
 
 

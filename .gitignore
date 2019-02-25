@@ -7,6 +7,4 @@ out/*
 target/*
 
 # Hibernate configuration
-src/main/resources/hibernate.cfg.xml
-src/main/resources/log4j.properties
-src/main/resources/log4j2.xml
+*/*/*/hibernate.cfg.xml

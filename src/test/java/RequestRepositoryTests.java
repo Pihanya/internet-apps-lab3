@@ -37,7 +37,7 @@ public class RequestRepositoryTests {
     Request request = new Request(0.5, 0.25, 5.0D, true);
     repository.addRequest(request);
 
-    List<Request> requests = repository.getAllRequests();
+    List<Request> requests = repository.getAllRequests().getResult();
     assertEquals(1, requests.size());
     assertEquals(request, requests.get(0));
   }
@@ -48,7 +48,7 @@ public class RequestRepositoryTests {
     repository.addRequest(new Request(0.75, 0.1, 2.0D, true));
     repository.deleteAllRequests();
 
-    List<Request> requests = repository.getAllRequests();
+    List<Request> requests = repository.getAllRequests().getResult();
     assertEquals(0, requests.size());
   }
 
@@ -56,7 +56,7 @@ public class RequestRepositoryTests {
   public void dropTableTest() {
     Executable closureContainingCodeToTest = () -> {
       repository.dropTable();
-      List<Request> requests = repository.getAllRequests();
+      List<Request> requests = repository.getAllRequests().getResult();
       assertEquals(0, requests.size());
     };
 

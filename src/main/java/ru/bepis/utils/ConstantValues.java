@@ -1,4 +1,4 @@
-package ru.bepis.util;
+package ru.bepis.utils;
 
 public class ConstantValues {
 
