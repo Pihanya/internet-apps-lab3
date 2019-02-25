@@ -12,11 +12,9 @@ import java.util.List;
 
 public class HibernateRequestRepository implements RequestRepository {
 
-  private Transaction transactionObject;
-  private static Session sessionObject;
+  private SessionSupplier supplier;
 
   public HibernateRequestRepository() {
-    SessionSupplier supplier;
     if (Boolean.valueOf(getSystemProperty("jsch.tunnel", "false"))) {
       supplier = SessionSupplierFactoryMethods.getJSCHForwaredHibernateSessionSupplier(
           getSystemProperty("jsch.sshHost", null),
@@ -31,29 +29,32 @@ public class HibernateRequestRepository implements RequestRepository {
     } else {
       supplier = SessionSupplierFactoryMethods.getHibernateSessionSupplier();
     }
-
-    sessionObject = supplier.supplySession();
   }
 
   @Override
   public RepositoryResponse<Void> addRequest(Request request) {
+    Session sessionObject = supplier.supplySession();
+
     try {
-      transactionObject = sessionObject.beginTransaction();
+      Transaction transactionObject = sessionObject.beginTransaction();
       sessionObject.save(request);
+
+      transactionObject.commit();
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
       return RepositoryResponse.getFailResponseWith(ex);
     } finally {
-      transactionObject.commit();
+      sessionObject.close();
     }
   }
 
   @Override
   public RepositoryResponse<List<Request>> getAllRequests() {
     List<Request> requests;
+    Session sessionObject = supplier.supplySession();
 
     try {
-      transactionObject = sessionObject.beginTransaction();
+      Transaction transactionObject = sessionObject.beginTransaction();
       SQLQuery query = sessionObject.createSQLQuery("SELECT * FROM request;");
       List objects = query.list();
 
@@ -62,33 +63,45 @@ public class HibernateRequestRepository implements RequestRepository {
         requests.add((Request) obj);
       }
 
+      if (transactionObject != null) {
+        transactionObject.commit();
+      }
+
       return RepositoryResponse.getSuccessResponseWith(requests);
     } catch (Exception ex) {
       return RepositoryResponse.getFailResponseWith(ex);
     } finally {
-      transactionObject.commit();
+      sessionObject.close();
     }
   }
 
   @Override
   public RepositoryResponse<Void> deleteAllRequests() {
+    Session sessionObject = supplier.supplySession();
+
     try {
-      transactionObject = sessionObject.beginTransaction();
+      Transaction transactionObject = sessionObject.beginTransaction();
       SQLQuery query = sessionObject.createSQLQuery("DELETE FROM request");
       query.executeUpdate();
+
+      if (transactionObject != null) {
+        transactionObject.commit();
+      }
 
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
       return RepositoryResponse.getFailResponseWith(ex);
     } finally {
-      transactionObject.commit();
+      sessionObject.close();
     }
   }
 
   @Override
   public RepositoryResponse<Void> createTable() {
+    Session sessionObject = supplier.supplySession();
+
     try {
-      transactionObject = sessionObject.beginTransaction();
+      Transaction transactionObject = sessionObject.beginTransaction();
       SQLQuery query = sessionObject.createSQLQuery("create table if not exists REQUEST (\n"
           + "   id     SERIAL NOT NULL,\n"
           + "   x      REAL   NOT NULL,\n"
@@ -99,28 +112,36 @@ public class HibernateRequestRepository implements RequestRepository {
           + ");");
       query.executeUpdate();
 
+      if (transactionObject != null) {
+        transactionObject.commit();
+      }
+
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
       return RepositoryResponse.getFailResponseWith(ex);
     } finally {
-      if (transactionObject != null) {
-        transactionObject.commit();
-      }
+      sessionObject.close();
     }
   }
 
   @Override
   public RepositoryResponse<Void> dropTable() {
+    Session sessionObject = supplier.supplySession();
+
     try {
-      transactionObject = sessionObject.beginTransaction();
+      Transaction transactionObject = sessionObject.beginTransaction();
       SQLQuery query = sessionObject.createSQLQuery("drop table if exists REQUEST");
       query.executeUpdate();
+
+      if(transactionObject != null) {
+        transactionObject.commit();
+      }
 
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
       return RepositoryResponse.getFailResponseWith(ex);
     } finally {
-      transactionObject.commit();
+      sessionObject.close();
     }
   }
 
