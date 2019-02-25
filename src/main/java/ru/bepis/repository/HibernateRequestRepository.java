@@ -42,6 +42,7 @@ public class HibernateRequestRepository implements RequestRepository {
       transactionObject.commit();
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
+      ex.printStackTrace();
       return RepositoryResponse.getFailResponseWith(ex);
     } finally {
       sessionObject.close();
@@ -69,6 +70,7 @@ public class HibernateRequestRepository implements RequestRepository {
 
       return RepositoryResponse.getSuccessResponseWith(requests);
     } catch (Exception ex) {
+      ex.printStackTrace();
       return RepositoryResponse.getFailResponseWith(ex);
     } finally {
       sessionObject.close();
@@ -90,6 +92,7 @@ public class HibernateRequestRepository implements RequestRepository {
 
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
+      ex.printStackTrace();
       return RepositoryResponse.getFailResponseWith(ex);
     } finally {
       sessionObject.close();
@@ -118,6 +121,7 @@ public class HibernateRequestRepository implements RequestRepository {
 
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
+      ex.printStackTrace();
       return RepositoryResponse.getFailResponseWith(ex);
     } finally {
       sessionObject.close();
@@ -139,6 +143,7 @@ public class HibernateRequestRepository implements RequestRepository {
 
       return RepositoryResponse.getSuccessResponseWith(null);
     } catch (Exception ex) {
+      ex.printStackTrace();
       return RepositoryResponse.getFailResponseWith(ex);
     } finally {
       sessionObject.close();
