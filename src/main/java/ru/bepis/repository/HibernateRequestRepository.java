@@ -1,12 +1,11 @@
 package ru.bepis.repository;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import org.hibernate.query.NativeQuery;
 import ru.bepis.model.Request;
 import ru.bepis.repository.session.SessionSupplier;
 import ru.bepis.repository.session.SessionSupplierFactoryMethods;
@@ -52,11 +51,18 @@ public class HibernateRequestRepository implements RequestRepository {
 
   @Override
   public RepositoryResponse<List<Request>> getAllRequests() {
-    List<Request> requests;
-
     try (Session sessionObject = supplier.supplySession()) {
-      Query<Request> query = sessionObject.createQuery("FROM request", Request.class);
-      return RepositoryResponse.getSuccessResponseWith(query.list());
+      NativeQuery sqlQuery = sessionObject.createSQLQuery("SELECT * FROM request;");
+      sqlQuery.addEntity(Request.class);
+
+      List requestObjects = sqlQuery.list();
+      List<Request> requests = new ArrayList<>(requestObjects.size());
+
+      for(Object requestObject : requestObjects) {
+        requests.add((Request) requestObject);
+      }
+
+      return RepositoryResponse.getSuccessResponseWith(requests);
     } catch (Exception ex) {
       ex.printStackTrace();
       return RepositoryResponse.getFailResponseWith(ex);
