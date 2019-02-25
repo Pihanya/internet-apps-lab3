@@ -94,8 +94,8 @@ function drawPoint() {
   console.log(lastX + " " + lastY + " " + lastR);
   let canvas = document.querySelector("#canvas");
   let context = canvas.getContext("2d");
-  let x = ((lastX * 130) + 150) / lastR;
-  let y = (150 - (lastY * 130)) / lastR;
+  let x = ((lastX * 130) / lastR + 150);
+  let y = (150 - (lastY * 130) / lastR);
   let result = document.getElementById("graph-controls:result").value;
   let isArea = (result === "true");
 

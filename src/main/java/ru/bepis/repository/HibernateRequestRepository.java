@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import ru.bepis.model.Request;
 import ru.bepis.repository.session.SessionSupplier;
 import ru.bepis.repository.session.SessionSupplierFactoryMethods;
@@ -52,33 +53,13 @@ public class HibernateRequestRepository implements RequestRepository {
   @Override
   public RepositoryResponse<List<Request>> getAllRequests() {
     List<Request> requests;
-    Session sessionObject = supplier.supplySession();
 
-    try {
-      Transaction transactionObject = sessionObject.beginTransaction();
-      SQLQuery query = sessionObject.createSQLQuery("SELECT * FROM request;");
-      List objects = query.list();
-
-      requests = new ArrayList<>(objects.size());
-      for (Iterator iterator = requests.iterator(); iterator.hasNext(); ) {
-        Request request = (Request) iterator.next();
-        requests.add(request);
-      }
-
-      /*for (Object obj : objects) {
-          requests.add((Request) obj);
-      }*/
-
-      if (transactionObject != null) {
-        transactionObject.commit();
-      }
-
-      return RepositoryResponse.getSuccessResponseWith(requests);
+    try (Session sessionObject = supplier.supplySession()) {
+      Query<Request> query = sessionObject.createQuery("FROM request", Request.class);
+      return RepositoryResponse.getSuccessResponseWith(query.list());
     } catch (Exception ex) {
       ex.printStackTrace();
       return RepositoryResponse.getFailResponseWith(ex);
-    } finally {
-      sessionObject.close();
     }
   }
 

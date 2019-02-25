@@ -27,23 +27,38 @@
         </tr>
         <tr id="content">
             <td id="left-content-column">
-                <p:dataTable value="#{requestsData.requests}"
-                             var="req"
-                             id="history"
-                             styleClass="inner">
-                    <p:column headerText="X">
-                        <h:outputText value="#{req.x}" />
-                    </p:column>
-                    <p:column headerText="Y">
-                        <h:outputText value="#{req.y}" />
-                    </p:column>
-                    <p:column headerText="R">
-                        <h:outputText value="#{req.r}" />
-                    </p:column>
-                    <p:column headerText="RESULT">
-                        <h:outputText value="#{req.result}" />
-                    </p:column>
-                </p:dataTable>
+                <h:form id="db-inputs">
+                    <h:inputHidden value="#{requestsData.x}" id="db-x"/>
+                    <h:inputHidden value="#{requestsData.y}" id="db-y"/>
+                    <h:inputHidden value="#{requestsData.r}" id="db-r"/>
+                    <h:inputHidden value="#{requestsData.result}" id="db-result"/>
+                    <h:inputHidden value="#{requestsData.size}" id="db-size"/>
+                    <p:remoteCommand name="save"
+                                     update="db-inputs:history"
+                                     oncomplete="updateTable();"
+                                     action="#{requestsData.addRequest()}"/>
+                    <p:remoteCommand name="updateTable"
+                                     update="db-inputs:history"
+                                     action="#{requestsData.getRequests}"/>
+
+                    <p:dataTable value="#{requestsData.requests}"
+                                 var="req"
+                                 id="history"
+                                 styleClass="inner">
+                        <p:column headerText="X">
+                            <h:outputText value="#{req.x}" />
+                        </p:column>
+                        <p:column headerText="Y">
+                            <h:outputText value="#{req.y}" />
+                        </p:column>
+                        <p:column headerText="R">
+                            <h:outputText value="#{req.r}" />
+                        </p:column>
+                        <p:column headerText="RESULT">
+                            <h:outputText value="#{req.result}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
             </td>
             <td id="middle-content-column">
                 <h:form id="data-form">
@@ -81,16 +96,7 @@
                                      />
                 </h:form>
 
-                <h:form id="db-inputs">
-                    <h:inputHidden value="#{requestsData.x}" id="db-x"/>
-                    <h:inputHidden value="#{requestsData.y}" id="db-y"/>
-                    <h:inputHidden value="#{requestsData.r}" id="db-r"/>
-                    <h:inputHidden value="#{requestsData.result}" id="db-result"/>
-                    <h:inputHidden value="#{requestsData.size}" id="db-size"/>
-                    <p:remoteCommand name="save"
-                                     update="db-size"
-                                     action="#{requestsData.addRequest()}"/>
-                </h:form>
+
             </td>
             <td id="right-content-column">
                 <p>Приложение определяет, входят ли указанные пользователем точки в заданную
