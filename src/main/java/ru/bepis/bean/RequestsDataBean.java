@@ -11,7 +11,7 @@ import ru.bepis.repository.RepositoryResponse;
 import ru.bepis.repository.RequestRepository;
 
 @ManagedBean(name = "requestsData", eager = true)
-@SessionScoped
+@ApplicationScoped
 @Data
 public class RequestsDataBean {
 
@@ -67,8 +67,14 @@ public class RequestsDataBean {
     this.repository = repository;
 
     RepositoryResponse<Void> response = repository.createTable();
-    if(!response.isSuccess()) {
-      throw new RuntimeException("Could not create table during creation of request data bean: " + response.getException().getMessage());
+    if (!response.isSuccess()) {
+      if (response.getException() != null) {
+        throw new RuntimeException(
+            "Could not create table during creation of request data bean: " + response
+                .getException().getMessage(), response.getException());
+      } else {
+        throw new RuntimeException("Could not create table during creation of request data bean");
+      }
     }
   }
 
