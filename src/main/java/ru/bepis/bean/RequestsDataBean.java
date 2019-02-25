@@ -1,5 +1,6 @@
 package ru.bepis.bean;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
@@ -84,10 +85,11 @@ public class RequestsDataBean {
     if (response.isSuccess()) {
       List<Request> requests = response.getResult();
       size = requests.size();
+      Collections.reverse(requests);
       return requests;
       //return requests.subList(Math.max(0, requests.size() - 10), requests.size()); // todo normalize
     } else {
-      size = -1;
+      size = requests.size();
       // todo implement behaviour
       return Collections.emptyList();
     }

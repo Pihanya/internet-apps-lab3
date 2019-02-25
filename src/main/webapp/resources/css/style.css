@@ -26,8 +26,8 @@ input {
 
 /* селектор потомств - граница для картинок в таблицах */
 td img {
-  border: 3px solid #4d7198;
-  margin-top: 5px;
+  width: 150px;
+  height: 50px;
 }
 
 /* каскадирование */

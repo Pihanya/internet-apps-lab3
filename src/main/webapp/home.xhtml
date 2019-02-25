@@ -38,21 +38,29 @@
                                      oncomplete="updateTable();"
                                      action="#{requestsData.addRequest()}"/>
                     <p:remoteCommand name="updateTable"
-                                     update="db-inputs:history"
+                                     update="db-inputs:db-size"
                                      action="#{requestsData.getRequests}"/>
 
                     <p:dataTable value="#{requestsData.requests}"
                                  var="req"
                                  id="history"
+                                 paginator="true"
+                                 rows="10"
                                  styleClass="inner">
                         <p:column headerText="X">
-                            <h:outputText value="#{req.x}" />
+                            <h:outputText value="#{req.x}">
+                                <f:convertNumber pattern="#0.000" locale="ru_RU"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Y">
-                            <h:outputText value="#{req.y}" />
+                            <h:outputText value="#{req.y}">
+                                <f:convertNumber pattern="#0.000" locale="ru_RU"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="R">
-                            <h:outputText value="#{req.r}" />
+                            <h:outputText value="#{req.r}">
+                                <f:convertNumber pattern="#0.000" locale="ru_RU"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="RESULT">
                             <h:outputText value="#{req.result}" />
@@ -80,7 +88,8 @@
                             <f:selectItems value="#{areaCheck.rPossibleValues}"/>
                         </h:selectOneMenu>
                     </fieldset>
-                    <img src="https://imgur.com/WUhMfE6" onmousedown="onFormSubmit()"
+                    <img src="http://pluspng.com/img-png/submit-button-png-submit-button-png-439.png"
+                         onmousedown="onFormSubmit()"
                          alt="Отправить"/>
                 </h:form>
                 <div id="errors"></div>
