@@ -21,8 +21,8 @@ public class HibernateSessionFactory {
    * the hibernate config file is in the default package. Use #setConfigFile() to update the
    * location of the configuration file for the current session.
    */
-  private static final String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
-  private static final ThreadLocal<Session> LOCAL_SESSION = new ThreadLocal<Session>();
+  private static final String CONFIG_FILE_LOCATION = "hibernate.cfg.xml";
+  private static final ThreadLocal<Session> LOCAL_SESSION = new ThreadLocal<>();
 
   private static Configuration configuration = new Configuration();
   private static String configFile = CONFIG_FILE_LOCATION;
@@ -43,7 +43,7 @@ public class HibernateSessionFactory {
    * @return Session
    */
   public static Session getSession() throws HibernateException {
-    Session session = (Session) LOCAL_SESSION.get();
+    Session session = LOCAL_SESSION.get();
     if (session == null || !session.isOpen()) {
 
       if (sessionFactory == null) {
@@ -69,8 +69,8 @@ public class HibernateSessionFactory {
 
   private static void configure() {
     try {
-      configuration.addResource("hibernate.cfg.xml");
-      configuration.configure(configFile);
+      configuration.addResource(configFile);
+      configuration.configure();
 
       ServiceRegistryBuilder builder = new ServiceRegistryBuilder();
       builder.applySettings(configuration.getProperties());
@@ -87,8 +87,7 @@ public class HibernateSessionFactory {
    * Close the single hibernate session instance.
    */
   public static void closeSession() throws HibernateException {
-
-    Session session = (Session) LOCAL_SESSION.get();
+    Session session = LOCAL_SESSION.get();
     LOCAL_SESSION.set(null);
 
     if (session != null) {
